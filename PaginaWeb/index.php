@@ -13,9 +13,12 @@
 				if (!isset($_REQUEST['login']) || !$_REQUEST['login'] == 'bien') {
 					include "login.php";
 				} else {
+					include "filtros.php";
 					include "recursos.php";
-					include "insertarRecursos.php";
-					include "insertarRecursos.proc.php";
+					include "reservas.php";
+					include "reservarRecursos.php";
+					include "liberarRecursos.php";
+					include "incidencias.php";
 				}
 			?>
 		</div>
