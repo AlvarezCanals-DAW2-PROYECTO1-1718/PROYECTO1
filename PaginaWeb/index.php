@@ -10,16 +10,16 @@
 		<div class="total">
 			<?php
 				include "assets/php/conexion.proc.php";
-				if (!isset($_REQUEST['login']) || !$_REQUEST['login'] == 'bien') {
-					include "login.php";
-				} else {
-					include "assets/php/filtros.php";
+				//if (!isset($_REQUEST['login']) || !$_REQUEST['login'] == 'bien') {
+				//	include "login.php";
+			//	} else {
+				//	include "assets/php/filtros.php";
 					include "assets/php/recursos.php";
-					include "assets/php/reservas.php";
-					include "assets/php/reservarRecursos.php";
-					include "assets/php/liberarRecursos.php";
-					include "assets/php/incidencias.php";
-				}
+				//	include "assets/php/reservas.php";
+				//	include "assets/php/reservarRecursos.php";
+				//	include "assets/php/liberarRecursos.php";
+				//	include "assets/php/incidencias.php";
+			//	}
 			?>
 		</div>
 	</body>

@@ -2,7 +2,7 @@
 	$ip='localhost';
 	$user='root';
 	$password='';
-	$bd_name='bd_181005_ejercicio1';
+	$bd_name='bd_proyactoreservarecursos';
 
 	$link = mysqli_connect($ip, $user, $password, $bd_name) or die();
 	$acentos = $link->query("SET NAMES 'utf8'");
