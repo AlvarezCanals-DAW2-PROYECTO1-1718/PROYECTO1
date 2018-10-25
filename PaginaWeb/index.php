@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/estilos.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/ventanaModal.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/formulariosBotones.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/tablas.css">
 	</head>
 	<body>
 		<div class="total">
@@ -17,11 +18,15 @@
 					//include "login.php";
 				//} else {
 					//include "assets/php/filtros.php";
-					//include "assets/php/recursos.php";
+					
 					//include "assets/php/reservas.php";
 					//include "assets/php/reservarRecursos.php";
 					//include "assets/php/liberarRecursos.php";
+					if (isset($_REQUEST['mostrar']) && $_REQUEST['mostrar'] == 'incidencias') {
 					include "assets/php/incidencias.php";
+					}else{
+						include "assets/php/recursos.php";
+					}
 				//}
 			?>
 			<a href="#mostrarDivAñadirList"><input class="añadir-lista" type="button" value="Añadir"></a>
