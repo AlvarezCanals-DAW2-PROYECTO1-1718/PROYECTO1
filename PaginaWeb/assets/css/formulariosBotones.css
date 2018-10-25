@@ -1,0 +1,54 @@
+div.formularios {
+	margin-left: 5%;
+	margin-top: 10px;
+}
+form {
+	overflow: hidden;
+	width: 70%;
+	margin: auto;
+	font-weight: 500;
+	font-family: roboto;
+}
+input[type="text"] {
+	outline: none;
+	padding: 10px;
+	display: block;
+	width: 70%;
+	border-radius: 3px;
+	border: 1px solid #eee;
+	float: right;
+	border: 1px solid #ccc;
+}
+input[type="submit"] {
+	padding: 5px;
+	color: #fff;
+	background: #b10004;
+	width: 61px;
+	border: 0;
+	border-radius: 3px;
+	cursor: pointer;
+	margin: 25px;
+	margin-right: 10px;
+	float: right;
+}
+input[type="button"] {
+	padding: 7px;
+	color: #fff;
+	background: #b10004;
+	width: 85px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	border: 0;
+	border-radius: 3px;
+	cursor: pointer;
+}
+textarea {
+	height: 150px;
+	max-height: 160px;
+	border-radius: 4px;
+	padding: 6px;
+	display: block;
+	float: right;
+	width: 70%;
+	border: 1px solid #ccc;
+}

@@ -31,13 +31,12 @@ CREATE TABLE IF NOT EXISTS `tbl_recurso` (
 `id_recurso` int(11) COLLATE utf8_unicode_ci NOT NULL AUTO_INCREMENT,
 `nombre_recurso` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
 `tipo_recurso` ENUM('sala multidisciplinar', 'sala informática', 'taller cocina', 'despacho entrevistas', "salón actos", 'sala reuniones', 'proyector portátil', 'portátil', 'móbil') COLLATE utf8_unicode_ci DEFAULT NULL,
-`disponibilidad_recurso` ENUM('si', 'no', 'incidencia') COLLATE utf8_unicode_ci DEFAULT NULL,
+`disponibilidad_recurso` ENUM('si', 'no') COLLATE utf8_unicode_ci DEFAULT NULL,
 PRIMARY KEY (`id_recurso`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `tbl_reserva` (
 `id_reserva` int(11) COLLATE utf8_unicode_ci NOT NULL AUTO_INCREMENT,
-`cantidadRecurso_reserva` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
 `fechaInicio_reserva` DATETIME COLLATE utf8_unicode_ci DEFAULT NULL,
 `fechaFinal_reserva` DATETIME COLLATE utf8_unicode_ci DEFAULT NULL,
 `tiempoEstimado_reserva` TIME COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -109,9 +108,9 @@ INSERT INTO `tbl_recurso` (`nombre_recurso`, `tipo_recurso`, `disponibilidad_rec
 ('móbil 1', 'móbil', 'si'),
 ('móbil 2', 'móbil', 'si');
 
-INSERT INTO `tbl_reserva` (`cantidadRecurso_reserva`, `fechaInicio_reserva`, `fechaFinal_reserva`, `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES
-('1', '2017-11-11 10:25:00', '2017-11-12 08:00:00', '02:15:00', (SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario1'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala multidisciplinar 1')),
-('1', '2018-7-10 09:00:00', '2018-7-10 09:05:00', '01:00:00', (SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario2'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 1'));
+INSERT INTO `tbl_reserva` (`fechaInicio_reserva`, `fechaFinal_reserva`, `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES
+('2017-11-11 10:25:00', '2017-11-12 08:00:00', '02:15:00', (SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario1'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala multidisciplinar 1')),
+('2018-7-10 09:00:00', '2018-7-10 09:05:00', '01:00:00', (SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario2'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 1'));
 
 /*UPDATE `tbl_recurso` SET `disponibilidad_recurso` = 'no' WHERE `tbl_recurso`.`nombre_recurso` = 'sala multidisciplinar 1';*/
 

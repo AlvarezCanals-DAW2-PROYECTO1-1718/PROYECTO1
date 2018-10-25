@@ -19,57 +19,20 @@ div.divEmergente:target {
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
+
 div.subDivEmergente {
-	/*width: 400px;*/
-	width: 70%;
-	position: relative;
-	margin: 10% auto;
-	/*padding: 5px 20px 13px 20px;*/
-	border-radius: 4px;
-	background: #f7f7f7;
-	/*background: -moz-linear-gradient(#fff, #999);
-	background: -webkit-linear-gradient(#fff, #999);
-	background: -o-linear-gradient(#fff, #999);*/
-	-webkit-transition: opacity 400ms ease-in;
-	-moz-transition: opacity 400ms ease-in;
-	transition: opacity 400ms ease-in;
-	overflow-y: scroll;
-	overflow-x: hidden;
-}
-div.subDivEmergenteEliminarComentarios {
-	/*width: 400px;*/
 	width: 50%;
 	position: relative;
 	margin: 10% auto;
-	/*padding: 5px 20px 13px 20px;*/
 	border-radius: 4px;
 	background: #f7f7f7;
-	/*background: -moz-linear-gradient(#fff, #999);
-	background: -webkit-linear-gradient(#fff, #999);
-	background: -o-linear-gradient(#fff, #999);*/
 	-webkit-transition: opacity 400ms ease-in;
 	-moz-transition: opacity 400ms ease-in;
 	transition: opacity 400ms ease-in;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
-div.subDivEmergenteEditarComentarios {
-	/*width: 400px;*/
-	width: 50%;
-	position: relative;
-	margin: 10% auto;
-	/*padding: 5px 20px 13px 20px;*/
-	border-radius: 4px;
-	background: #f7f7f7;
-	/*background: -moz-linear-gradient(#fff, #999);
-	background: -webkit-linear-gradient(#fff, #999);
-	background: -o-linear-gradient(#fff, #999);*/
-	-webkit-transition: opacity 400ms ease-in;
-	-moz-transition: opacity 400ms ease-in;
-	transition: opacity 400ms ease-in;
-	overflow-y: scroll;
-	overflow-x: hidden;
-}
+
 a.close {
 	background: #606061;
 	color: #FFFFFF;
@@ -94,7 +57,6 @@ a.close:hover {
 h3.ventanaModal {
 	margin: 0px;
 	background-color: #f3f3f3;
-	/* background-color: #585858; */
 	padding: 15px;
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
