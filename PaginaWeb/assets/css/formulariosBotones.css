@@ -96,3 +96,7 @@ select {
 	float: right;
 	width: 230px;
 }
+.desabilitado {
+	background-color: #D3D3D3 !important;
+	cursor: default !important;
+}

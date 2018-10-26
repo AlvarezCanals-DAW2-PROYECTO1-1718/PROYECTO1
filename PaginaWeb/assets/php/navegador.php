@@ -1,6 +1,6 @@
 <nav id='MenuDesplegable' class="menu">
 	<ul class="nav">
-		<li class="nivel1"><a href="index.php">Inicio</a></li>
+		<li class="nivel1"><a href="index.php">Recursos</a></li>
 		<li class="nivel1"><a href="index.php?mostrar=reservas">Reservas</a></li>
 		<li class="nivel1"><a href="index.php?mostrar=incidencias">Incidencias</a></li>
 

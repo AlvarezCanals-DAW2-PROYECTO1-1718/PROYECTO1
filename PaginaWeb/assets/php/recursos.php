@@ -8,6 +8,7 @@
 					echo "<div class='columna'>Nombre</div>";
 					echo "<div class='columna'>Tipo</div>";
 					echo "<div class='columna'>Disponibilidad</div>";
+					echo "<div class='columna'>Reservar</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$nombre = $array['nombre_recurso'];
@@ -17,6 +18,12 @@
 						echo "<div class='columna'>$nombre</div>";
 						echo "<div class='columna'>$tipo</div>";
 						echo "<div class='columna'>$disponible</div>";
+						if ($disponible == 'si') {
+							echo "<div class='columna'><a href='#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+						} else {
+							echo "<div class='columna'><input class='desabilitado' type='button' value='Reservar'></div>";
+						}
+						
 					echo "</div>";
 				}
 			}
@@ -49,6 +56,17 @@
 			</div>
 		</div>
 	</div>
-	<a href="#mostrarAñadirRecurso"><input class="añadir-lista" type="button" value="Añadir"></a>
+	<div id='mostrarAñadirReserva' class='divEmergente'>
+		<div class='subDivEmergente'>
+			<a href='#close' title='Close' class='close'>X</a>
+			<h3 class='ventanaModal'>Añadir Reserva</h3>
+			<div class='formularios'>
+				<form action='index.php?mostrar=incidencias' method='POST'>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	<a href="#mostrarAñadirRecurso"><input type="button" value="Añadir"></a>
 	<!-- <a href="index.php?insertaRecurso=si">Insertar Recursos <i class="fas fa-plus-square"></i></a><br> -->
 </article>

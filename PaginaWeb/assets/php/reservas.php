@@ -44,17 +44,7 @@
 			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$nombre', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE `id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 1')))";
 		}
 	?>
-	<div id='mostrarAñadirReserva' class='divEmergente'>
-		<div class='subDivEmergente'>
-			<a href='#close' title='Close' class='close'>X</a>
-			<h3 class='ventanaModal'>Añadir Reserva</h3>
-			<div class='formularios'>
-				<form action='index.php?mostrar=incidencias' method='POST'>
-					
-				</form>
-			</div>
-		</div>
-	</div>
+	
 	<div id='mostrarFinalizarReserva' class='divEmergente'>
 		<div class='subDivEmergente'>
 			<a href='#close' title='Close' class='close'>X</a>
@@ -66,7 +56,5 @@
 			</div>
 		</div>
 	</div>
-	<a href="#mostrarAñadirReserva"><input class="añadir-lista" type="button" value="Añadir"></a>
-	<a href="#mostrarFinalizarReserva"><input class="añadir-lista" type="button" value="Finalizar"></a>
 	<!-- <a href="index.php"><input class="añadir-lista" type="button" value="Recursos"></a> -->
 </article>
