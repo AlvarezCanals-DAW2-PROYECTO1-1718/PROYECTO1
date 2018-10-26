@@ -106,6 +106,7 @@ INSERT INTO `tbl_empleado` (`email_empleado`, `usuario_empleado`, `password_empl
 ('usu18@mail.com', 		'usuario18', 	'1234', 'Lola', 	'Garcia', 	'usuarios'),
 ('usu19@mail.com', 		'usuario19', 	'1234', 'Matt', 	'Dacal', 	'usuarios'),
 ('usu20@mail.com', 		'usuario20', 	'1234', 'Barry', 	'Alen', 	'usuarios');
+UPDATE `tbl_empleado` SET `password_empleado` = '$2y$10$mH6cW.UpaVVk4YUGWI.NNeOhsorQr.WjGZlXi5DhJXz9uY9sUh5gC';
 
 INSERT INTO `tbl_recurso` (`nombre_recurso`, `tipo_recurso`, `disp_recurso`) VALUES
 ('sala multidisciplinar 1', 	'sala multidisciplinar', 	'si'),

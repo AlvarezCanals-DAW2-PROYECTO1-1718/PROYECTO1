@@ -13,4 +13,10 @@
 		echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
 		exit;
 	}
+
+	try {
+		$conn = new PDO("mysql:host=$ip;dbname=$bd_name;", $user, $password);
+	} catch (PDOException $e) {
+		die('Connection Failed: ' . $e->getMessage());
+	}
 ?>

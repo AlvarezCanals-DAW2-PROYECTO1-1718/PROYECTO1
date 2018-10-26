@@ -9,39 +9,39 @@
 	</head>
 	<body>
 		<?php
-			include "assets/php/conexion.proc.php";
-			/*if (!isset($_SESSION['user_id'])) {
-				include "assets/php/login.php";
+			include "php/conexion.proc.php";
+			if (!isset($_SESSION['user_id'])) {
+				include "php/login.php";
 			} else {
-				$usuario=$user['nombre'];*/
-				include "assets/php/navegador.php";
+				$usuario=$user['nombre'];
+				include "php/navegador.php";
 				?><section><?php
 					if (!isset($_REQUEST['mostrar'])) {
-						include "assets/php/recursos.php";
+						include "php/recursos.php";
 						?><!-- <a href="index.php?mostrar=incidencias"><input class="añadir-lista" type="button" value="incidencias"></a> --><?php
 					} else {
 						$mostrar = $_REQUEST['mostrar'];
 						switch ($mostrar) {
 							case 'recursos':
-								include "assets/php/recursos.php";
+								include "php/recursos.php";
 								break;
 							case 'reservas':
-								include "assets/php/reservas.php";
+								include "php/reservas.php";
 								break;
 							case 'incidencias':
-								include "assets/php/incidencias.php";
+								include "php/incidencias.php";
 								break;
 							default:
 								echo "Error";
 								break;
 						}
-						//include "assets/php/filtros.php";
-						//include "assets/php/reservas.php";
-						//include "assets/php/reservarRecursos.php";
-						//include "assets/php/liberarRecursos.php";
+						//include "php/filtros.php";
+						//include "php/reservas.php";
+						//include "php/reservarRecursos.php";
+						//include "php/liberarRecursos.php";
 					}
 				?></section><?php
-			/*}*/
+			}
 		?>
 	</body>
 </html>
