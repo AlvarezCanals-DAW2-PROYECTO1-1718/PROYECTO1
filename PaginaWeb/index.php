@@ -10,12 +10,12 @@
 	<body>
 		<?php
 			include "assets/php/conexion.proc.php";
-			//if (!isset($_SESSION['user_id'])) {
-				include "assets/php/login/login.html";
-			//} else {
-				//$usuario=$user['nombre'];
-				//include "assets/php/navegador.php";
-				/*?><section><?php
+			/*if (!isset($_SESSION['user_id'])) {
+				include "assets/php/login.php";
+			} else {
+				$usuario=$user['nombre'];*/
+				include "assets/php/navegador.php";
+				?><section><?php
 					if (!isset($_REQUEST['mostrar'])) {
 						include "assets/php/recursos.php";
 						?><!-- <a href="index.php?mostrar=incidencias"><input class="añadir-lista" type="button" value="incidencias"></a> --><?php
@@ -40,7 +40,7 @@
 						//include "assets/php/reservarRecursos.php";
 						//include "assets/php/liberarRecursos.php";
 					}
-				?></section><?php*/
+				?></section><?php
 			/*}*/
 		?>
 	</body>
