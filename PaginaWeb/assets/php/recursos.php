@@ -28,7 +28,16 @@
 				}
 			}
 		echo "</div>";
-
+		if (isset($_REQUEST['hora'])) {
+			$hora_aprox=$_REQUEST['hora'];
+			$usuario=$_SESION['user_id'];
+			$recurso=$_REQUEST['recursoReserva'];
+			//CONSULTA MAL (POR ACABAR)
+			/*$query="INSERT INTO `tbl_reserva` (`fechaInicio_reserva`, `tiempoEstimado_reserva`, `id_empleado`,id_recurso) VALUES ('$nombre', '$descripcion', '$fecha', */
+			echo "$query";
+			$consulta = mysqli_query($link, $query);
+			header('Location: index.php?mostrar=incidencias');
+		}
 		// Consultas--------------------------------
 		/*$nodisponible=mysqli_query($link, "SELECT * FROM tbl_recurso WHERE disponibilidad_recurso='no' ORDER BY id_recurso");
 		$tiempo=mysqli_query($link, "SELECT * FROM `tbl_reserva` ORDER BY `tbl_reserva`.`tiempoEstimado_reserva` DESC");
@@ -61,8 +70,46 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Añadir Reserva</h3>
 			<div class='formularios'>
-				<form action='index.php?mostrar=incidencias' method='POST'>
-					
+				<form action='index.php?mostrar=recursos' method='POST'>
+					<label>Tiempo estimado reserva:</label>
+					<input type="time" name="hora" value="01:00:00" max="24:00:00" min="00:00:00" step="1">
+					<br><br><br>
+					<label>Usuario:</label>
+					<select name="recursoReserva">
+						<option value="">-- Selecciona --</option>
+						<?php
+							/*falta inner para que solo se muestren los recursos que estan en una reserva*/
+							$consultausr=mysqli_query($link, "SELECT * FROM tbl_empleado ORDER BY id_empleado");
+							if(mysqli_num_rows($consulta)>0) {
+								while($array = mysqli_fetch_array($consultausr)) {
+									$id_empleado = $array['id_empleado'];
+									$nombre_empleado = $array['nombre_empleado'];	
+									$apellido_empleado= $array['apellido_empleado'];								
+									echo "<option value='$id_empleado'>$nombre_empleado $apellido_empleado</option>";
+								}
+							}
+						?>
+					</select>
+					<br><br>
+					<br style='clear: both;'>
+					<br>
+					<label>Recurso a reservar:</label>
+					<select name="recursoReserva">
+						<option value="">-- Selecciona --</option>
+						<?php
+							/*falta inner para que solo se muestren los recursos que estan en una reserva*/
+							$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
+							if(mysqli_num_rows($consulta)>0) {
+								while($array = mysqli_fetch_array($consulta)) {
+									$id = $array['id_recurso'];
+									$nombre = $array['nombre_recurso'];									
+									echo "<option value='$id'>$nombre</option>";
+								}
+							}
+						?>
+					</select>
+					<br style='clear: both;'>
+					<input type='submit' value='Enviar'>
 				</form>
 			</div>
 		</div>
