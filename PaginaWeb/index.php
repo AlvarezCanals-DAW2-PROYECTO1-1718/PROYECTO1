@@ -10,10 +10,13 @@
 	<body>
 		<?php
 			include "php/conexion.proc.php";
+			include "php/datosUsuario.proc.php";
 			if (!isset($_SESSION['user_id'])) {
 				include "php/login.php";
 			} else {
-				$usuario=$user['nombre'];
+				$nombreUsuario = $usuario['usuario_empleado'];
+				echo "$nombreUsuario";
+				echo "<a href='index.php?mostrar=cerrarSesion'>Cerrar sesion</a>";
 				include "php/navegador.php";
 				?><section><?php
 					if (!isset($_REQUEST['mostrar'])) {
@@ -30,6 +33,9 @@
 								break;
 							case 'incidencias':
 								include "php/incidencias.php";
+								break;
+							case 'cerrarSesion':
+								include "php/login.php";
 								break;
 							default:
 								echo "Error";

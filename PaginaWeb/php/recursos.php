@@ -1,10 +1,12 @@
 <article>
 	<h1>Recursos</h1>
+	
 	<?php
 		$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
 		echo "<div class='tabla'>";
 			if(mysqli_num_rows($consulta)>0) {
 				echo "<div class='fila encabezado'>";
+					echo "<div class='columna'>Imagen</div>";
 					echo "<div class='columna'>Nombre</div>";
 					echo "<div class='columna'>Tipo</div>";
 					echo "<div class='columna'>Disponibilidad</div>";
@@ -13,8 +15,13 @@
 				while($array = mysqli_fetch_array($consulta)) {
 					$nombre = $array['nombre_recurso'];
 					$tipo = $array['tipo_recurso'];
-					$disponible=$array['disp_recurso'];
+					$disponible = $array['disp_recurso'];
+					$rutaImagen = $array['rutaArchivos_recurso'];
+					$nombreImagen = $array['nombreArchivos_recurso'];
+					$extensionImagen = $array['extensionArchivos_recurso'];
+					$imagen = $rutaImagen.$nombreImagen.$extensionImagen;
 					echo "<div class='fila'>";
+						echo "<div class='columna'><img src='$imagen'></div>";
 						echo "<div class='columna'>$nombre</div>";
 						echo "<div class='columna'>$tipo</div>";
 						echo "<div class='columna'>$disponible</div>";
