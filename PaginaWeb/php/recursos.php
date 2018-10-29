@@ -1,6 +1,18 @@
 <article>
 	<h1>Recursos</h1>
 	<?php
+		if (isset($_REQUEST['nombreRecurso'])) {
+			$nombreRec=$_REQUEST['nombreRecurso'];
+			$descRec=$_REQUEST['descripcionRecurso'];
+			$rutaImg=$_REQUEST['ruta'];
+			$imgNombre=$_REQUEST['nombreImg'];
+			$extImg=$_REQUEST['extensionArchivo'];	
+			$tipoRec = $_REQUEST['tipoRecurso'];
+			$text_query1="INSERT INTO `tbl_recurso` ( `rutaArchivos_recurso`, `nombreArchivos_recurso`, `extensionArchivos_recurso`, `nombre_recurso`, `descripcion_recurso`, `tipo_recurso`, `disp_recurso`) VALUES ('$rutaImg', '$imgNombre', '$extImg', '$nombreRec', '$descRec', '$tipoRec', 'si');";
+			mysqli_query($link,$text_query1);
+			header('Location: index.php');
+		}
+
 		$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
 		echo "<div class='tabla'>";
 			if(mysqli_num_rows($consulta)>0) {
@@ -36,17 +48,7 @@
 			}
 		echo "</div>";
 
-		if (isset($_REQUEST['nombreRecurso'])) {
-			$nombreRec=$_REQUEST['nombreRecurso'];
-			$descRec=$_REQUEST['descripcionRecurso'];
-			$rutaImg=$_REQUEST['ruta'];
-			$imgNombre=$_REQUEST['nombreImg'];
-			$extImg=$_REQUEST['extensionArchivo'];	
-			$tipoRec = $_REQUEST['tipoRecurso'];
-			$text_query1="INSERT INTO `tbl_recurso` ( `rutaArchivos_recurso`, `nombreArchivos_recurso`, `extensionArchivos_recurso`, `nombre_recurso`, `descripcion_recurso`, `tipo_recurso`, `disp_recurso`) VALUES ('$rutaImg', '$imgNombre', '$extImg', '$nombreRec', '$descRec', '$tipoRec', 'si');";
-			mysqli_query($link,$text_query1);
-			header('Location: index.php?mostrar=reservas');
-		}
+		
 		// Consultas--------------------------------
 		/*$nodisponible=mysqli_query($link, "SELECT * FROM tbl_recurso WHERE disponibilidad_recurso='no' ORDER BY id_recurso");
 		$tiempo=mysqli_query($link, "SELECT * FROM `tbl_reserva` ORDER BY `tbl_reserva`.`tiempoEstimado_reserva` DESC");

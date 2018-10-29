@@ -1,7 +1,32 @@
 <article>
 	<h1>Reservas</h1>
 	<?php 
-		$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva ORDER BY id_reserva");
+		if (isset($_REQUEST['tiempoEstimado_reserva'])) {
+			$id_rec=$_REQUEST['idRecurso'];
+			$tiempo=$_REQUEST['tiempoEstimado_reserva'];
+			$descripcion=$_REQUEST['descripcionReserva'];
+			$cogerFecha = getdate();
+			$dia = $cogerFecha['mday'];
+			$mes = $cogerFecha['mon'];
+			$anyo = $cogerFecha['year'];
+			$hora = $cogerFecha['hours'];
+			$minuto = $cogerFecha['minutes'];
+			$segundo = $cogerFecha['seconds'];
+			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
+
+			$query="INSERT INTO `tbl_reserva` ( `descripcion_reserva`,`fechaInicio_reserva`,  `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES ('$descripcion', '$fecha', '$tiempo', '$idUsuario', '$id_rec');";
+			$consulta = mysqli_query($link, $query);
+			header('Location: index.php?mostrar=reservas');
+		}
+		
+		if (isset($_REQUEST['idUsu'])) {
+			$us=$_REQUEST['idUsu'];
+				$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva WHERE id_empleado='$us' ORDER BY id_reserva");
+			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva ORDER BY id_reserva");
+		}else {
+			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva ORDER BY id_reserva");
+
+		}
 		echo "<div class='tabla'>";
 			if(mysqli_num_rows($consulta)>0) {
 				echo "<div class='fila encabezado'>";
@@ -25,24 +50,8 @@
 				}
 			}
 		echo "</div>";
-
-		if (isset($_REQUEST['tiempoEstimado_reserva'])) {
-			$id_rec=$_REQUEST['idRecurso'];
-			$tiempo=$_REQUEST['tiempoEstimado_reserva'];
-			$descripcion=$_REQUEST['descripcionReserva'];
-			$cogerFecha = getdate();
-			$dia = $cogerFecha['mday'];
-			$mes = $cogerFecha['mon'];
-			$anyo = $cogerFecha['year'];
-			$hora = $cogerFecha['hours'];
-			$minuto = $cogerFecha['minutes'];
-			$segundo = $cogerFecha['seconds'];
-			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
-
-			$query="INSERT INTO `tbl_reserva` ( `descripcion_reserva`,`fechaInicio_reserva`,  `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES ('$descripcion', '$fecha', '$tiempo', '$idUsuario', '$id_rec');";
-			$consulta = mysqli_query($link, $query);
-			header('Location: index.php?mostrar=reservas');
-		}
+			
+		
 	?>
 	
 	<div id='mostrarFinalizarReserva' class='divEmergente'>
