@@ -14,15 +14,21 @@
 			$segundo = $cogerFecha['seconds'];
 			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
 
-			$recurso = $_REQUEST['recursoIncidencia'];
+			$idRecurso = $_REQUEST['idRecursoIncidencia'];
 
-			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$nombre', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE `id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = '$recurso')))";
+			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$nombre', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`finalizacion_reserva` = 'incidencia') AND (`id_recurso` = $idRecurso)))";
 			$consulta = mysqli_query($link, $query);
 			header('Location: index.php?mostrar=incidencias');
 		}
 
 		// Consulta incompleta
-		$consulta=mysqli_query($link, "SELECT * FROM tbl_incidencia ORDER BY id_incidencia");
+		if (isset($_REQUEST['idUsu'])) {
+			$us=$_REQUEST['idUsu'];
+			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` WHERE `tbl_reserva`.`id_empleado`='$us' ORDER BY `id_incidencia`");
+		}else{
+			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` ORDER BY `id_incidencia`");
+		}
+		
 		echo "<div class='tabla'>";
 			if(mysqli_num_rows($consulta)>0) {
 				echo "<div class='fila encabezado'>";
@@ -52,6 +58,8 @@
 						echo "<div class='columna'><a href='#mostrarFinalizarIncidencia'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
 					echo "</div>";
 				}
+			}else{
+				echo "Aún no tienes ninguna reserva";
 			}
 		echo "</div>";
 	?>
@@ -71,11 +79,11 @@
 					<br style='clear: both;'>
 					<br>
 					<label>Recurso incidencia:</label>
-					<select name="recursoIncidencia">
+					<select name="idRecursoIncidencia">
 						<option value="">-- Selecciona --</option>
 						<?php
 							/*falta inner para que solo se muestren los recursos que estan en una reserva*/
-							$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
+							$consulta=mysqli_query($link, "SELECT * FROM `tbl_recurso` INNER JOIN `tbl_reserva` ON `tbl_recurso`.`id_recurso`=`tbl_reserva`.`id_recurso` WHERE `tbl_reserva`.`id_empleado`='$usuario' ORDER BY `id_recurso`");
 							if(mysqli_num_rows($consulta)>0) {
 								while($array = mysqli_fetch_array($consulta)) {
 									$id = $array['id_recurso'];
