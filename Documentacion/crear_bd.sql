@@ -42,6 +42,7 @@ PRIMARY KEY (`id_recurso`)
 
 CREATE TABLE IF NOT EXISTS `tbl_reserva` (
 `id_reserva` int(11) COLLATE utf8_unicode_ci NOT NULL AUTO_INCREMENT,
+`descripcion_reserva` text COLLATE utf8_unicode_ci DEFAULT NULL,
 `fechaInicio_reserva` DATETIME COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP,
 `fechaFinal_reserva` DATETIME COLLATE utf8_unicode_ci DEFAULT NULL,
 `tiempoEstimado_reserva` TIME COLLATE utf8_unicode_ci DEFAULT NULL,

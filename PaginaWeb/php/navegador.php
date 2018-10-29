@@ -4,17 +4,22 @@
 		<li class="nivel1"><a href="index.php?mostrar=reservas">Reservas</a></li>
 		<li class="nivel1"><a href="index.php?mostrar=incidencias">Incidencias</a></li>
 
-		<li class="usuario"><a href="index.php?mostrar=reservas&mias=si">Mis Reservas</a></li>
-		<li class="usuario"><a href="index.php?mostrar=incidencias&mias=si">Mis Incidencias</a></li>
+		<!-- <li class="usuario"><a href="index.php?mostrar=reservas&idUsu=si">Mis Reservas</a></li>
+		<li class="usuario"><a href="index.php?mostrar=incidencias&idUsu=si">Mis Incidencias</a></li> -->
 		<?php
+			$nombreUsuario = $usuario['usuario_empleado'];
+			$idUsuario = $usuario['id_empleado'];
+			
 			// if ($user['grupo']=='administrador')
-			/*echo "<li class='usuario'><a>".$usuario."</a>";
+			echo "<li class='usuario'><a>".$nombreUsuario."</a>";
 				echo "<ul class=ul2>";
-					echo "<li class='usuario2'><a class=usuario href=''>Tu perfil</a></li>";
-					echo "<li class='usuario2'><a class=usuario href=''>Configuracion</a></li>";
-					echo "<li class='usuario2'><a class=usuario href=''>Salir</a></li>";
+					echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=reservas&idUsu=$idUsuario'>Mis Reservas</a></li>";
+					echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=incidencias&idUsu=$idUsuario'>Mis Incidencias</a></li>";
+					echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=cerrarSesion'>Cerrar sesion</a></li>";
 				echo "</ul>";
-			echo "</li>";*/
+			echo "</li>";
+
+			/*echo "<a href='index.php?mostrar=cerrarSesion'>Cerrar sesion</a>";*/
 		?>
 	</ul>
 </nav>

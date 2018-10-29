@@ -14,9 +14,6 @@
 			if (!isset($_SESSION['user_id'])) {
 				include "php/login.php";
 			} else {
-				$nombreUsuario = $usuario['usuario_empleado'];
-				echo "$nombreUsuario";
-				echo "<a href='index.php?mostrar=cerrarSesion'>Cerrar sesion</a>";
 				include "php/navegador.php";
 				?><section><?php
 					if (!isset($_REQUEST['mostrar'])) {
