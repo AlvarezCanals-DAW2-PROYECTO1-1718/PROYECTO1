@@ -1,6 +1,26 @@
 <article>
 	<h1>Incidencias</h1>
 	<?php
+		if (isset($_REQUEST['tituloIncidencia'])) {
+			$nombre=$_REQUEST['tituloIncidencia'];
+			$descripcion=$_REQUEST['descripcionIncidencia'];
+			
+			$cogerFecha = getdate();
+			$dia = $cogerFecha['mday'];
+			$mes = $cogerFecha['mon'];
+			$anyo = $cogerFecha['year'];
+			$hora = $cogerFecha['hours'];
+			$minuto = $cogerFecha['minutes'];
+			$segundo = $cogerFecha['seconds'];
+			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
+
+			$recurso = $_REQUEST['recursoIncidencia'];
+
+			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$nombre', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE `id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = '$recurso')))";
+			$consulta = mysqli_query($link, $query);
+			header('Location: index.php?mostrar=incidencias');
+		}
+
 		// Consulta incompleta
 		$consulta=mysqli_query($link, "SELECT * FROM tbl_incidencia ORDER BY id_incidencia");
 		echo "<div class='tabla'>";
@@ -29,33 +49,13 @@
 						echo "<div class='columna'>$fechaInicio</div>";
 						echo "<div class='columna'>$fechaFin</div>";
 						echo "<div class='columna'>$disponible</div>";
-						echo "<div class='columna'><a href='#mostrarAñadirIncidencia'><input type='button' value='Añadir'></a></div>";
+						echo "<div class='columna'><a href='#mostrarFinalizarIncidencia'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
 					echo "</div>";
 				}
 			}
 		echo "</div>";
-
-		if (isset($_REQUEST['tituloIncidencia'])) {
-			$nombre=$_REQUEST['tituloIncidencia'];
-			$descripcion=$_REQUEST['descripcionIncidencia'];
-			
-			$cogerFecha = getdate();
-			$dia = $cogerFecha['mday'];
-			$mes = $cogerFecha['mon'];
-			$anyo = $cogerFecha['year'];
-			$hora = $cogerFecha['hours'];
-			$minuto = $cogerFecha['minutes'];
-			$segundo = $cogerFecha['seconds'];
-			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
-
-			$recurso = $_REQUEST['recursoIncidencia'];
-
-			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$nombre', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE `id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = '$recurso')))";
-			echo "$query";
-			$consulta = mysqli_query($link, $query);
-			header('Location: index.php?mostrar=incidencias');
-		}
 	?>
+	
 	<div id='mostrarAñadirIncidencia' class='divEmergente'>
 		<div class='subDivEmergente'>
 			<a href='#close' title='Close' class='close'>X</a>
@@ -102,6 +102,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- <a href="#mostrarAñadirIncidencia"><input class="añadir-lista" type="button" value="Añadir"></a> -->
-	<a href="#mostrarFinalizarIncidencia"><input class="añadir-lista" type="button" value="Finalizar"></a>
+	<a href="#mostrarAñadirIncidencia"><input class="añadir-lista" type="button" value="Añadir"></a>
+	<!-- <a href="#mostrarFinalizarIncidencia"><input class="añadir-lista" type="button" value="Finalizar"></a> -->
 </article>
