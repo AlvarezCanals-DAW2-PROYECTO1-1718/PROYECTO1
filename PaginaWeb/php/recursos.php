@@ -13,6 +13,7 @@
 					echo "<div class='columna'>Reservar</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
+					$id=$array['id_recurso'];
 					$nombre = $array['nombre_recurso'];
 					$tipo = $array['tipo_recurso'];
 					$disponible = $array['disp_recurso'];
@@ -26,7 +27,7 @@
 						echo "<div class='columna'>$tipo</div>";
 						echo "<div class='columna'>$disponible</div>";
 						if ($disponible == 'si') {
-							echo "<div class='columna'><a href='#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							echo "<div class='columna'><a href='index.php?idRecurso=$id#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
 						} else {
 							echo "<div class='columna'><input class='desabilitado' type='button' value='Reservar'></div>";
 						}
@@ -36,6 +37,24 @@
 			}
 		echo "</div>";
 
+		if (isset($_REQUEST['tiempoEstimado_reserva'])) {
+			$id_rec=$_REQUEST['idRecurso'];
+			$tiempo=$_REQUEST['tiempoEstimado_reserva'];
+			$descripcion=$_REQUEST['descripcionReserva'];
+			$cogerFecha = getdate();
+			$dia = $cogerFecha['mday'];
+			$mes = $cogerFecha['mon'];
+			$anyo = $cogerFecha['year'];
+			$hora = $cogerFecha['hours'];
+			$minuto = $cogerFecha['minutes'];
+			$segundo = $cogerFecha['seconds'];
+			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
+
+			$query="INSERT INTO `tbl_reserva` ( `fechaInicio_reserva`,  `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES ( '$fecha', '$tiempo', '$idUsuario', '$id_rec');";
+			echo "$query";
+			$consulta = mysqli_query($link, $query);
+			header('Location: index.php?mostrar=incidencias');
+		}
 		// Consultas--------------------------------
 		/*$nodisponible=mysqli_query($link, "SELECT * FROM tbl_recurso WHERE disponibilidad_recurso='no' ORDER BY id_recurso");
 		$tiempo=mysqli_query($link, "SELECT * FROM `tbl_reserva` ORDER BY `tbl_reserva`.`tiempoEstimado_reserva` DESC");
@@ -68,8 +87,20 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Añadir Reserva</h3>
 			<div class='formularios'>
-				<form action='index.php?mostrar=incidencias' method='POST'>
+				<form action='index.php?mostrar=recursos' method='POST'>
+					<label>Tiempo aproximado</label>
+					<input type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
+					<br><br>
+					<label>Descripción reserva:</label>
+					<textarea rows='10' cols='70' name='descripcionReserva' placeholder='Indica brevemente tu reserva'></textarea>
+					<br><br>
+					<br style='clear: both;'>
+					<br>
+
+
 					
+					<br style='clear: both;'>
+					<input type='submit' value='Enviar'>
 				</form>
 			</div>
 		</div>
