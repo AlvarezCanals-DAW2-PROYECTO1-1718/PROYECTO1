@@ -1,0 +1,89 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box; /*es para que si se pone un pading no canvie el porcentaje*/
+}
+nav {
+	/*background-color: #ffffff;*/ /*color fondo normal BLANCO*/
+	background-color: #b10004;
+	/*font:bold 13px "Arial"; */
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	width: 100%;
+	/*box-shadow: 0px 4px 3px rgba(0,0,0,.5);*/
+	box-shadow: 0 -5px 3px 6px rgba(0,0,0,.255);
+	left: 0 !important;
+	/*font-size: 13px;*/
+	/*font-weight: 500 !important;*/
+	font-family: 'Roboto', sans-serif;
+	/*font-family: Roboto, Arial;*/
+}
+ul.nav {
+	list-style-type: none; 
+	margin-left: 10%;
+}
+nav ul li.nivel1 {
+	display: inline-block;
+	width: 8%;
+	position: relative;
+	text-align: center;
+}
+nav ul li.login {
+	display: inline-block;
+	min-width: 16%;
+	position: relative;
+	text-align: center;
+	float: right;
+	padding-right: 15px;
+}
+nav ul li.usuario {
+	display: inline-block;
+	min-width: 8%;
+	position: relative;
+	text-align: center;
+	cursor: pointer;
+	float: right;
+	padding-right: 15px;
+}
+nav li a {
+	display: block;
+	text-decoration: none;
+	line-height: 50px;
+	/*color: #333333;*/ /*color fetras NEGRO*/
+	color: #ffffff;
+	font-weight: 300;
+}
+nav li.nivel1:hover a, #menu_gral li a:focus {
+	background: #c00004; /*color fondo cuando pasas por encima de los principales GRIS CLARO*/
+	/*color: #FF7335;*/ /*color de las letras cuando pasas por encima de los principales NARANGA*/
+}
+nav ul li.login:hover, nav ul li.usuario:hover {
+	background: #c00004;
+}
+ul.ul2 {
+	position:absolute;
+	background-color: red;
+	/*width: 100%;*/
+	width: 130px;
+	display: none;
+}
+
+li.usuario2 {
+	background-color: #FFFFFF;
+	width: 100%;
+	color: #000000;
+	list-style-type: none;
+}
+
+li.usuario:hover > ul.ul2 {
+	display:block;
+}
+a.usuario {
+	color: #000000;
+}
+
+.imgNAV {
+	visibility: hidden;
+	position: absolute;
+}

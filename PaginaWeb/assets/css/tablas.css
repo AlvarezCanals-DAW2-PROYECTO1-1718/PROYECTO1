@@ -1,0 +1,15 @@
+div.tabla {
+	display: table;
+	border: 1px solid black;
+}
+div.fila {
+	display: table-row;
+	border: 1px solid black;
+}
+div.columna {
+	display: table-cell;
+	border: 1px solid black;
+}
+div.encabezado {
+	font-weight: bold;
+}
