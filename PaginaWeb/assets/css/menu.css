@@ -45,6 +45,7 @@ nav ul li.usuario {
 	cursor: pointer;
 	float: right;
 	padding-right: 15px;
+	margin-right: 100px;
 }
 nav li a {
 	display: block;

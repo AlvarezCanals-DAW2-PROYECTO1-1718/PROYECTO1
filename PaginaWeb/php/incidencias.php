@@ -13,6 +13,7 @@
 					echo "<div class='columna'>Fecha inicio</div>";
 					echo "<div class='columna'>Fecha fin</div>";
 					echo "<div class='columna'>Disponibilidad durante incidencia</div>";
+					echo "<div class='columna'>Añadir</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$nombre = $array['titulo_incidencia'];
@@ -28,6 +29,7 @@
 						echo "<div class='columna'>$fechaInicio</div>";
 						echo "<div class='columna'>$fechaFin</div>";
 						echo "<div class='columna'>$disponible</div>";
+						echo "<div class='columna'><a href='#mostrarAñadirIncidencia'><input type='button' value='Añadir'></a></div>";
 					echo "</div>";
 				}
 			}
@@ -100,7 +102,6 @@
 			</div>
 		</div>
 	</div>
-	<a href="#mostrarAñadirIncidencia"><input class="añadir-lista" type="button" value="Añadir"></a>
+	<!-- <a href="#mostrarAñadirIncidencia"><input class="añadir-lista" type="button" value="Añadir"></a> -->
 	<a href="#mostrarFinalizarIncidencia"><input class="añadir-lista" type="button" value="Finalizar"></a>
-	<!-- <a href="index.php"><input class="añadir-lista" type="button" value="Recursos"></a> -->
 </article>

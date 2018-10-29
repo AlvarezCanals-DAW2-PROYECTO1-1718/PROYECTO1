@@ -22,7 +22,7 @@
 					$extensionImagen = $array['extensionArchivos_recurso'];
 					$imagen = $rutaImagen.$nombreImagen.$extensionImagen;
 					echo "<div class='fila'>";
-						echo "<div class='columna'><img src='$imagen'></div>";
+						echo "<div class='columna'><img class='imgRecursos' src='$imagen'></div>";
 						echo "<div class='columna'>$nombre</div>";
 						echo "<div class='columna'>$tipo</div>";
 						echo "<div class='columna'>$disponible</div>";

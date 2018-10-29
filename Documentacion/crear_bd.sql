@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `tbl_recurso` (
 `nombre_recurso` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
 `descripcion_recurso` text COLLATE utf8_unicode_ci DEFAULT NULL,
 `tipo_recurso` ENUM('sala multidisciplinar', 'sala informática', 'taller cocina', 'despacho entrevistas', "salón actos", 'sala reuniones', 'proyector portátil', 'portátil', 'móvil') COLLATE utf8_unicode_ci DEFAULT NULL,
-`disp_recurso` ENUM('si', 'no') COLLATE utf8_unicode_ci DEFAULT NULL,
+`disp_recurso` ENUM('si', 'no') COLLATE utf8_unicode_ci DEFAULT 'si',
 PRIMARY KEY (`id_recurso`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
