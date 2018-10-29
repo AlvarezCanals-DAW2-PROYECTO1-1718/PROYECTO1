@@ -26,10 +26,10 @@
 			}
 		echo "</div>";
 
-		if (isset($_REQUEST['nombreIncidencia'])) {
-			$nombre=$_REQUEST['nombreIncidencia'];
-			$descripcion=$_REQUEST['descripcionIncidencia'];
-			
+		if (isset($_REQUEST['tiempoEstimado_reserva'])) {
+			$id_rec=$_REQUEST['idRecurso'];
+			$tiempo=$_REQUEST['tiempoEstimado_reserva'];
+			$descripcion=$_REQUEST['descripcionReserva'];
 			$cogerFecha = getdate();
 			$dia = $cogerFecha['mday'];
 			$mes = $cogerFecha['mon'];
@@ -39,9 +39,9 @@
 			$segundo = $cogerFecha['seconds'];
 			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
 
-			$recurso = $_REQUEST['recursoIncidencia'];
-
-			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$nombre', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE `id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 1')))";
+			$query="INSERT INTO `tbl_reserva` ( `descripcion_reserva`,`fechaInicio_reserva`,  `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES ('$descripcion', '$fecha', '$tiempo', '$idUsuario', '$id_rec');";
+			$consulta = mysqli_query($link, $query);
+			header('Location: index.php?mostrar=reservas');
 		}
 	?>
 	

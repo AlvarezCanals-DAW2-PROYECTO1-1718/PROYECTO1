@@ -26,7 +26,7 @@
 						echo "<div class='columna'>$tipo</div>";
 						echo "<div class='columna'>$disponible</div>";
 						if ($disponible == 'si') {
-							echo "<div class='columna'><a href='index.php?#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							echo "<div class='columna'><a href='#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
 						} else {
 							echo "<div class='columna'><input class='desabilitado' type='button' value='Reservar'></div>";
 						}
@@ -36,24 +36,6 @@
 			}
 		echo "</div>";
 
-		if (isset($_REQUEST['tiempoEstimado_reserva'])) {
-			$id_rec=$_REQUEST['idRecurso'];
-			$tiempo=$_REQUEST['tiempoEstimado_reserva'];
-			$descripcion=$_REQUEST['descripcionReserva'];
-			$cogerFecha = getdate();
-			$dia = $cogerFecha['mday'];
-			$mes = $cogerFecha['mon'];
-			$anyo = $cogerFecha['year'];
-			$hora = $cogerFecha['hours'];
-			$minuto = $cogerFecha['minutes'];
-			$segundo = $cogerFecha['seconds'];
-			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
-
-			$query="INSERT INTO `tbl_reserva` ( `descripcion_reserva`,`fechaInicio_reserva`,  `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES ('$descripcion', '$fecha', '$tiempo', '$idUsuario', '$id_rec');";
-
-			$consulta = mysqli_query($link, $query);
-			//header('Location: index.php?mostrar=reservas');
-		}
 		if (isset($_REQUEST['nombreRecurso'])) {
 			$nombreRec=$_REQUEST['nombreRecurso'];
 			$descRec=$_REQUEST['descripcionRecurso'];
@@ -125,7 +107,7 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Añadir Reserva</h3>
 			<div class='formularios'>
-				<form action='index.php?mostrar=recursos' method='POST'>
+				<form action='index.php?mostrar=reservas' method='POST'>
 					<label>Tiempo aproximado</label>
 					<input type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
 					<br><br>
