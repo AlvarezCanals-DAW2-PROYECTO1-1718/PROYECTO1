@@ -22,7 +22,7 @@
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
 				$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva WHERE id_empleado='$us' ORDER BY id_reserva");
-			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva ORDER BY id_reserva");
+			
 		}else {
 			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva ORDER BY id_reserva");
 

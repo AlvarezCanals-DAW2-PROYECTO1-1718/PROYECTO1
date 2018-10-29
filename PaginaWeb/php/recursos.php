@@ -24,7 +24,7 @@
 					echo "<div class='columna'>Reservar</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
-					$id=$array['id_recurso'];
+					$idRecurso=$array['id_recurso'];
 					$nombre = $array['nombre_recurso'];
 					$tipo = $array['tipo_recurso'];
 					$disponible = $array['disp_recurso'];
@@ -38,7 +38,7 @@
 						echo "<div class='columna'>$tipo</div>";
 						echo "<div class='columna'>$disponible</div>";
 						if ($disponible == 'si') {
-							echo "<div class='columna'><a href='#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							echo "<div class='columna'><a href='#mostrarAñadirReserva$idRecurso'><input type='button' value='Reservar'></a></div>";
 						} else {
 							echo "<div class='columna'><input class='desabilitado' type='button' value='Reservar'></div>";
 						}
@@ -104,25 +104,37 @@
 			</div>
 		</div>
 	</div>
-	<div id='mostrarAñadirReserva' class='divEmergente'>
-		<div class='subDivEmergente'>
-			<a href='#close' title='Close' class='close'>X</a>
-			<h3 class='ventanaModal'>Añadir Reserva</h3>
-			<div class='formularios'>
-				<form action='index.php?mostrar=reservas' method='POST'>
-					<label>Tiempo aproximado</label>
-					<input type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
-					<br><br>
-					<label>Descripción reserva:</label>
-					<textarea rows='10' cols='70' name='descripcionReserva' placeholder='Indica brevemente tu reserva'></textarea>
-					<input type="hidden" name="idRecurso" value=<?php echo"$id" ?>>
-					<br><br>
-					<br style='clear: both;'>
-					<input type='submit' value='Enviar'>
-				</form>
-			</div>
-		</div>
-	</div>
+
+	<?php
+		$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
+		if(mysqli_num_rows($consulta)>0) {
+			while($array = mysqli_fetch_array($consulta)) {
+				$idRecurso = $array['id_recurso'];
+				?>
+					<div id=<?php echo"mostrarAñadirReserva$idRecurso" ?> class='divEmergente'>
+						<div class='subDivEmergente'>
+							<a href='#close' title='Close' class='close'>X</a>
+							<h3 class='ventanaModal'>Añadir Reserva</h3>
+							<div class='formularios'>
+								<form action='index.php?mostrar=reservas' method='POST'>
+									<label>Tiempo aproximado</label>
+									<input type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
+									<br><br>
+									<label>Descripción reserva:</label>
+									<textarea rows='10' cols='70' name='descripcionReserva' placeholder='Indica brevemente tu reserva'></textarea>
+									<input type="hidden" name="idRecurso" value=<?php echo"$idRecurso" ?>>
+									<br><br>
+									<br style='clear: both;'>
+									<input type='submit' value='Enviar'>
+								</form>
+							</div>
+						</div>
+					</div>
+				<?php
+			}
+		}
+	?>
+				
 	<a href="#mostrarAñadirRecurso"><input type="button" value="Añadir"></a>
 	<!-- <a href="index.php?insertaRecurso=si">Insertar Recursos <i class="fas fa-plus-square"></i></a><br> -->
 </article>
