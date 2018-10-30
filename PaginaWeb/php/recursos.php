@@ -1,5 +1,6 @@
 <article>
 	<?php
+		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['nombreRecurso'])) {
 			$nombreRec = $_REQUEST['nombreRecurso'];
 			$descRec = $_REQUEST['descripcionRecurso'];
@@ -23,7 +24,6 @@
 					echo "<div class='columna'>Imagen</div>";
 					echo "<div class='columna'>Nombre</div>";
 					echo "<div class='columna'>Disponibilidad</div>";
-					echo "<div class='columna'>Reservar</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$idRecurso=$array['id_recurso'];
@@ -94,7 +94,8 @@
 								}
 							}
 						?>
-					</select>
+					</select><br>
+					<a href="#mostrarAñadirTipoRecurso"><input type="button" value="Añadir Tipo Recurso"></a>
 					<br style='clear: both;'><br>
 					<input type='submit' value='Enviar'>
 				</form>
@@ -139,8 +140,13 @@
 			</div>
 		</div>
 	</div>
-				
-	<a href="#mostrarAñadirRecurso"><input type="button" value="Añadir Recurso"></a>
-	<a href="#mostrarAñadirTipoRecurso"><input type="button" value="Añadir Tipo Recurso"></a>
+	
+	<?php
+		if ($grupoUsuario == 'administradores') {
+			echo "<a href='#mostrarAñadirRecurso'><input type='button' value='Añadir Recurso'></a>";
+		}
+	?>
+	
+	
 	<!-- <a href="index.php?insertaRecurso=si">Insertar Recursos <i class="fas fa-plus-square"></i></a><br> -->
 </article>

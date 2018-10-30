@@ -8,7 +8,7 @@
 		$minuto = $cogerFecha['minutes'];
 		$segundo = $cogerFecha['seconds'];
 		$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
-
+		// insertar reserva -----------------------------------
 		if (isset($_REQUEST['tiempoEstimado_reserva'])) {
 			$id_rec=$_REQUEST['idRecurso'];
 			$tiempo=$_REQUEST['tiempoEstimado_reserva'];
@@ -22,13 +22,24 @@
 			header('Location: index.php?mostrar=reservas');
 		}
 
+		// Finalizar reserva -------------------------------------
 		if (isset($_REQUEST['idRecursoFinalizar'])) {
 			$idRes=$_REQUEST['idReserva'];
 			$idRecurso=$_REQUEST['idRecursoFinalizar'];
 			$update1=mysqli_query($link, "UPDATE `tbl_reserva` SET `fechaFinal_reserva` = '$fecha', `modoFinalizacion_reserva` = 'bien' WHERE `tbl_reserva`.`id_reserva` = '$idRes';");
-			$update2=mysqli_query($link, "UPDATE `tbl_recurso` SET `disp_recurso` = 'si' WHERE `tbl_recurso`.`id_recurso` = '$idRecurso';");					
+			$update2=mysqli_query($link, "UPDATE `tbl_recurso` SET `disp_recurso` = 'si' WHERE `tbl_recurso`.`id_recurso` = '$idRecurso';");
 		}
 
+		// Cancelar reserva -------------------------------------
+		if (isset($_REQUEST['idReservaCancelar'])) {
+			$idReserva=$_REQUEST['idReservaCancelar'];
+
+			$idRecurso=$_REQUEST['idRecurso'];
+			$update1=mysqli_query($link, "UPDATE `tbl_reserva` SET `modoFinalizacion_reserva` = 'cancelada', `fechaFinal_reserva` = '$fecha' WHERE `tbl_reserva`.`id_reserva` = '$idReserva';");
+			$update2=mysqli_query($link, "UPDATE `tbl_recurso` SET `disp_recurso` = 'si' WHERE `tbl_recurso`.`id_recurso` = '$idRecurso';");
+		}
+
+		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
 			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva WHERE id_empleado='$us' ORDER BY id_reserva");
@@ -46,9 +57,6 @@
 					echo "<div class='columna'>Fecha final</div>";
 					echo "<div class='columna'>Tiempo aproximado</div>";
 					echo "<div class='columna'>Modo finalizacion</div>";
-					if ($boton) {
-						echo "<div class='columna'>Boton</div>";
-					}
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$idReserva=$array['id_reserva'];
@@ -61,25 +69,30 @@
 						echo "<div class='columna'>$fechaFin</div>";
 						echo "<div class='columna'>$tiempoEstimado</div>";
 						echo "<div class='columna'>$modoFinalizacion</div>";
-						if ($boton && $modoFinalizacion==NULL) {
-							$query="SELECT * FROM `tbl_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso`=`tbl_recurso`.`id_recurso` WHERE `id_reserva` = '$idReserva' ";
-							$consulta = mysqli_query($link, $query);
-							if(mysqli_num_rows($consulta)>0) {
-								while($array = mysqli_fetch_array($consulta)) {
-									$idRecurso = $array['id_recurso'];
+						
+						$queryBoton="SELECT * FROM `tbl_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso`=`tbl_recurso`.`id_recurso` WHERE `id_reserva` = '$idReserva'";
+						$consultaBoton = mysqli_query($link, $queryBoton);
+						if(mysqli_num_rows($consulta)>0) {
+							while($arrayBoton = mysqli_fetch_array($consultaBoton)) {
+								$idRecurso = $arrayBoton['id_recurso'];
+								if ($boton && $modoFinalizacion==NULL) {
 									echo "<div class='columna'><a href='index.php?mostrar=reservas&idRecursoFinalizar=$idRecurso&idUsu=2&idReserva=$idReserva'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
 								}
-							}
 
+								if ($grupoUsuario == 'administradores') {
+									if ($fechaFin == NULL) {
+										echo "<div class='columna'><a href='index.php?mostrar=reservas&idReservaCancelar=$idReserva&idRecurso=$idRecurso'><input class='añadir-lista' type='button' value='Cancelar'></a></div>";
+									}							
+								}
+							}
 						}
+						
+						
 					echo "</div>";
 				}
+			} else {
+				echo "Aun no hay reservas";
 			}
 		echo "</div>";
-			
-		
 	?>
-	
-
-	<!-- <a href="index.php"><input class="añadir-lista" type="button" value="Recursos"></a> -->
 </article>

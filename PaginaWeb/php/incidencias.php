@@ -1,38 +1,50 @@
 <article>
 	<?php
+		$cogerFecha = getdate();
+		$dia = $cogerFecha['mday'];
+		$mes = $cogerFecha['mon'];
+		$anyo = $cogerFecha['year'];
+		$hora = $cogerFecha['hours'];
+		$minuto = $cogerFecha['minutes'];
+		$segundo = $cogerFecha['seconds'];
+		$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
+
+		// Insertar incidencia ----------------------------------------
 		if (isset($_REQUEST['tituloIncidencia'])) {
 			$tituloIncidencia=$_REQUEST['tituloIncidencia'];
 			$descripcion=$_REQUEST['descripcionIncidencia'];
-			
-			$cogerFecha = getdate();
-			$dia = $cogerFecha['mday'];
-			$mes = $cogerFecha['mon'];
-			$anyo = $cogerFecha['year'];
-			$hora = $cogerFecha['hours'];
-			$minuto = $cogerFecha['minutes'];
-			$segundo = $cogerFecha['seconds'];
-			$fecha = $anyo."-".$mes."-".$dia." ".$hora.":".$minuto.":".$segundo;
-
 			$idRecurso = $_REQUEST['idRecursoIncidencia'];
-
 			$query="SET @sub = (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`id_recurso` = $idRecurso) AND (`fechaFinal_reserva` IS NULL));";
 			$consulta = mysqli_query($link, $query);
-
 			$query="UPDATE `tbl_reserva` SET `fechaFinal_reserva` = '$fecha', `modoFinalizacion_reserva` = 'incidencia' WHERE `id_reserva` = @sub";
 			$consulta = mysqli_query($link, $query);
-
 			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$tituloIncidencia', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = $idRecurso)))";
-			echo "$query";
 			$consulta = mysqli_query($link, $query);
-			header('Location: index.php?mostrar=incidencias');
+			header("Location: index.php?mostrar=incidencias&idUsu=$idUsuario");
 		}
 
-		// Consulta incompleta
+		if (isset($_REQUEST['idIncidenciaFinalizar'])) {
+			$idRecurso=$_REQUEST['idRecurso'];
+			$idIncidencia=$_REQUEST['idIncidenciaFinalizar'];
+			$update1=mysqli_query($link, "UPDATE `tbl_incidencia` SET `fechaFinal_incidencia` = '$fecha' WHERE `tbl_incidencia`.`id_incidencia` = '$idIncidencia';");
+			$update2=mysqli_query($link, "UPDATE `tbl_recurso` SET `disp_recurso` = 'si' WHERE `tbl_recurso`.`id_recurso` = '$idRecurso';");
+		}
+
+		// Empezar incidencia -----------------------------------------
+		if (isset($_REQUEST['tiempoEstimado_incidencia'])) {
+			$idIncidencia=$_REQUEST['idIncidenciaEmpezar'];
+			$tiempoEstimado = $_REQUEST['tiempoEstimado_incidencia'];
+			$consultaEmpezar=mysqli_query($link, "UPDATE `tbl_incidencia` SET `tiempoEstimado_incidencia` = '$tiempoEstimado' WHERE `tbl_incidencia`.`id_incidencia` = '$idIncidencia';");
+		}
+
+		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
 			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` WHERE `tbl_reserva`.`id_empleado`='$us' ORDER BY `id_incidencia`");
+			$boton = true;
 		}else{
 			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` ORDER BY `id_incidencia`");
+			$boton = false;
 		}
 		
 		echo "<div class='tabla'>";
@@ -44,7 +56,6 @@
 					echo "<div class='columna'>Tiempo aproximado</div>";
 					echo "<div class='columna'>Fecha inicio</div>";
 					echo "<div class='columna'>Fecha fin</div>";
-					echo "<div class='columna'>Añadir</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$idIncidencia = $array['id_incidencia'];
@@ -59,13 +70,32 @@
 						echo "<div class='columna'>$tiempoEstimado</div>";
 						echo "<div class='columna'>$fechaInicio</div>";
 						echo "<div class='columna'>$fechaFin</div>";
-						echo "<div class='columna'><a href='index.php?mostrar=incidencias&idIncidencia=$idIncidencia#mostrarFinalizarIncidencia'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
+						if ($grupoUsuario == 'administradores') {
+							
+							$queryBoton="SELECT * FROM `tbl_reserva` INNER JOIN `tbl_incidencia` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` WHERE `id_incidencia` = '$idIncidencia'";
+							$consultaBoton = mysqli_query($link, $queryBoton);
+							if(mysqli_num_rows($consulta)>0) {
+								while($array2 = mysqli_fetch_array($consultaBoton)) {
+									$idRecurso = $array2['id_recurso'];
+									if ($tiempoEstimado == NULL) {
+										echo "<div class='columna'><a href='index.php?mostrar=incidencias&idIncidencia=$idIncidencia#mostrarEmpezarIncidencia'><input class='añadir-lista' type='button' value='Empezar'></a></div>";
+									} elseif($fechaFin == NULL) {
+										echo "<div class='columna'><a href='index.php?mostrar=incidencias&idIncidenciaFinalizar=$idIncidencia&idRecurso=$idRecurso'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
+									}
+								}
+							}
+							
+						}
 					echo "</div>";
 				}
 			} else {
-				echo "Aún no tienes ninguna reserva";
+				echo "Aún no hay incidencias";
 			}
 		echo "</div>";
+
+		if ($boton) {
+			echo "<a href='#mostrarAñadirIncidencia'><input class='añadir-lista' type='button' value='Añadir'></a>";
+		}
 	?>
 	
 	<div id='mostrarAñadirIncidencia' class='divEmergente'>
@@ -73,7 +103,7 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Añadir Incidencia</h3>
 			<div class='formularios'>
-				<form action='index.php?mostrar=incidencias' method='POST'>
+				<form action=<?php echo "index.php?mostrar=incidencias&idUsu=$idUsuario "; ?> method='POST'>
 					<label>Titulo incidencia:</label>
 					<input type='text' name='tituloIncidencia' placeholder='Titulo de la incidencia'>
 					<br><br><br>
@@ -86,8 +116,7 @@
 					<select name="idRecursoIncidencia">
 						<option value="">-- Selecciona --</option>
 						<?php
-							/*falta inner para que solo se muestren los recursos que estan en una reserva*/
-							$query = "SELECT * FROM `tbl_recurso` INNER JOIN `tbl_reserva` ON `tbl_recurso`.`id_recurso`=`tbl_reserva`.`id_recurso` WHERE `tbl_reserva`.`id_empleado`='$idUsuario' ORDER BY `tbl_recurso`.`id_recurso`";
+							$query = "SELECT * FROM `tbl_recurso` INNER JOIN `tbl_reserva` ON `tbl_recurso`.`id_recurso`=`tbl_reserva`.`id_recurso` WHERE `tbl_reserva`.`id_empleado`='$idUsuario' AND `tbl_reserva`.`modoFinalizacion_reserva` IS NULL ORDER BY `tbl_recurso`.`id_recurso`";
 							$consulta=mysqli_query($link, $query);
 							if(mysqli_num_rows($consulta)>0) {
 								while($array = mysqli_fetch_array($consulta)) {
@@ -104,17 +133,25 @@
 			</div>
 		</div>
 	</div>
-	<div id='mostrarFinalizarIncidencia' class='divEmergente'>
+	<?php
+		if (isset($_REQUEST['idIncidencia'])) {
+			$idIncidencia = $_REQUEST['idIncidencia'];
+		}
+	?>
+	<div id='mostrarEmpezarIncidencia' class='divEmergente'>
 		<div class='subDivEmergente'>
 			<a href='#close' title='Close' class='close'>X</a>
-			<h3 class='ventanaModal'>Finalizar Incidencia</h3>
+			<h3 class='ventanaModal'>Empezar Incidencia</h3>
 			<div class='formularios'>
 				<form action='index.php?mostrar=incidencias' method='POST'>
-					
+					<label>Tiempo aproximado</label>
+					<input type='time' name='tiempoEstimado_incidencia' placeholder='Tiempo Estimado'>
+					<input type="hidden" name="idIncidenciaEmpezar" value=<?php echo"$idIncidencia" ?>>
+					<br><br>
+					<br style='clear: both;'>
+					<input type='submit' value='Enviar'>
 				</form>
 			</div>
 		</div>
 	</div>
-	<a href="#mostrarAñadirIncidencia"><input class="añadir-lista" type="button" value="Añadir"></a>
-	<!-- <a href="#mostrarFinalizarIncidencia"><input class="añadir-lista" type="button" value="Finalizar"></a> -->
 </article>

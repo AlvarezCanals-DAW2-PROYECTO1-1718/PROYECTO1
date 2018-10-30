@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `tbl_reserva` (
 `fechaInicio_reserva` DATETIME COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP,
 `fechaFinal_reserva` DATETIME COLLATE utf8_unicode_ci DEFAULT NULL,
 `tiempoEstimado_reserva` TIME COLLATE utf8_unicode_ci DEFAULT NULL,
-`modoFinalizacion_reserva` ENUM('bien', 'incidencia') COLLATE utf8_unicode_ci DEFAULT NULL,
+`modoFinalizacion_reserva` ENUM('bien', 'incidencia', 'cancelada') COLLATE utf8_unicode_ci DEFAULT NULL,
 `id_empleado` int(11) COLLATE utf8_unicode_ci DEFAULT NULL,
 `id_recurso` int(11) COLLATE utf8_unicode_ci DEFAULT NULL,
 PRIMARY KEY (`id_reserva`),
@@ -102,24 +102,7 @@ INSERT INTO `tbl_empleado` (`email_empleado`, `usuario_empleado`, `password_empl
 ('usuAdmin@mail.com', 	'usuarioAdmin', NULL, 'Javier', 'Idalgo', 	'administradores'),
 ('usu01@mail.com', 		'usuario01', 	NULL, 'Juan', 	'Gonzalez', 'usuarios'),
 ('usu02@mail.com', 		'usuario02', 	NULL, 'Pepe', 	'Gomez', 	'usuarios'),
-('usu03@mail.com', 		'usuario03', 	NULL, 'Lola', 	'Garcia', 	'usuarios'),
-('usu04@mail.com', 		'usuario04', 	NULL, 'Matt', 	'Dacal', 	'usuarios'),
-('usu05@mail.com', 		'usuario05', 	NULL, 'Barry', 	'Alen', 	'usuarios'),
-('usu06@mail.com', 		'usuario06', 	NULL, 'Juan', 	'Gonzalez', 'usuarios'),
-('usu07@mail.com', 		'usuario07', 	NULL, 'Pepe', 	'Gomez', 	'usuarios'),
-('usu08@mail.com', 		'usuario08', 	NULL, 'Lola', 	'Garcia', 	'usuarios'),
-('usu09@mail.com', 		'usuario09', 	NULL, 'Matt', 	'Dacal', 	'usuarios'),
-('usu10@mail.com', 		'usuario10', 	NULL, 'Barry', 	'Alen', 	'usuarios'),
-('usu11@mail.com', 		'usuario11', 	NULL, 'Juan', 	'Gonzalez', 'usuarios'),
-('usu12@mail.com', 		'usuario12', 	NULL, 'Pepe', 	'Gomez', 	'usuarios'),
-('usu13@mail.com', 		'usuario13', 	NULL, 'Lola', 	'Garcia', 	'usuarios'),
-('usu14@mail.com', 		'usuario14', 	NULL, 'Matt', 	'Dacal', 	'usuarios'),
-('usu15@mail.com', 		'usuario15', 	NULL, 'Barry', 	'Alen', 	'usuarios'),
-('usu16@mail.com', 		'usuario16', 	NULL, 'Juan', 	'Gonzalez', 'usuarios'),
-('usu17@mail.com', 		'usuario17', 	NULL, 'Pepe', 	'Gomez', 	'usuarios'),
-('usu18@mail.com', 		'usuario18', 	NULL, 'Lola', 	'Garcia', 	'usuarios'),
-('usu19@mail.com', 		'usuario19', 	NULL, 'Matt', 	'Dacal', 	'usuarios'),
-('usu20@mail.com', 		'usuario20', 	NULL, 'Barry', 	'Alen', 	'usuarios');
+('usu03@mail.com', 		'usuario03', 	NULL, 'Lola', 	'Garcia', 	'usuarios');
 UPDATE `tbl_empleado` SET `password_empleado` = '$2y$10$mH6cW.UpaVVk4YUGWI.NNeOhsorQr.WjGZlXi5DhJXz9uY9sUh5gC';
 
 INSERT INTO `tbl_tipoRecurso` (`nombre_tipoRecurso`) VALUES
@@ -158,21 +141,21 @@ INSERT INTO `tbl_reserva` (`descripcion_reserva`, `fechaInicio_reserva`, `fechaF
 ('reserva01', '2018-10-20 08:25:00', '2018-10-22 08:00:00', '48:00:00', 'bien', 		(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario01'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 1')),
 ('reserva02', '2018-10-21 09:45:00', '2018-10-21 13:00:00', '03:00:00', 'bien', 		(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario02'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala multidisciplinar 1')),
 ('reserva03', '2018-10-23 09:00:00', '2018-10-24 10:00:00', '27:00:00', 'bien', 		(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario03'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'proyector portátil 2')),
-('reserva04', '2018-10-23 10:30:00', '2018-10-26 08:00:00', '72:00:00', 'bien', 		(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario04'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'móvil 1')),
-('reserva05', '2018-10-24 12:00:00', '2018-10-24 18:00:00', '05:00:00', 'bien', 		(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario05'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala de reuniones 1')),
+('reserva04', '2018-10-23 10:30:00', '2018-10-26 08:00:00', '72:00:00', 'bien', 		(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario01'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'móvil 1')),
+('reserva05', '2018-10-24 12:00:00', '2018-10-24 18:00:00', '05:00:00', 'bien', 		(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario02'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala de reuniones 1')),
 /*Pendientes---------------*/
-('reserva06', '2018-10-25 08:00:00', NULL, 					'24:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario06'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'móvil 2')),
-('reserva07', '2018-10-26 08:00:00', NULL, 					'03:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario07'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 2')),
-('reserva08', '2018-10-27 09:00:00', NULL, 					'04:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario08'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'taller de cocina 1')),
-('reserva09', '2018-10-28 09:00:00', NULL, 					'01:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario09'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'despacho para entrevistas 1')),
-('reserva10', '2018-10-29 09:00:00', NULL, 					'01:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario09'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'despacho para entrevistas 2')),
+('reserva06', '2018-10-25 08:00:00', NULL, 					'24:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario03'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'móvil 2')),
+('reserva07', '2018-10-26 08:00:00', NULL, 					'03:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario01'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 2')),
+('reserva08', '2018-10-27 09:00:00', NULL, 					'04:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario02'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'taller de cocina 1')),
+('reserva09', '2018-10-28 09:00:00', NULL, 					'01:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario03'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'despacho para entrevistas 1')),
+('reserva10', '2018-10-29 09:00:00', NULL, 					'01:00:00', NULL, 			(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario01'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'despacho para entrevistas 2')),
 /*Incidencias---------------*/
-('reserva11', '2018-10-30 08:25:00', '2018-10-30 08:30:00', '48:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario10'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 1')),
-('reserva12', '2018-10-30 08:25:00', '2018-10-30 08:30:00', '48:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario11'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 3')),
-('reserva13', '2018-10-30 09:45:00', '2018-10-30 09:50:00', '03:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario12'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala multidisciplinar 3')),
-('reserva14', '2018-10-30 09:00:00', '2018-10-30 09:05:00', '27:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario13'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'proyector portátil 1')),
-('reserva15', '2018-10-30 10:30:00', '2018-10-30 10:35:00', '72:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario14'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'móvil 1')),
-('reserva16', '2018-10-30 12:00:00', '2018-10-30 12:05:00', '05:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario15'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'salón de actos 1'));
+('reserva11', '2018-10-30 08:25:00', '2018-10-30 08:30:00', '48:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario02'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 1')),
+('reserva12', '2018-10-30 08:25:00', '2018-10-30 08:30:00', '48:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario03'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'portátil 3')),
+('reserva13', '2018-10-30 09:45:00', '2018-10-30 09:50:00', '03:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario01'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala multidisciplinar 3')),
+('reserva14', '2018-10-30 09:00:00', '2018-10-30 09:05:00', '27:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario02'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'proyector portátil 1')),
+('reserva15', '2018-10-30 10:30:00', '2018-10-30 10:35:00', '72:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario03'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'móvil 1')),
+('reserva16', '2018-10-30 12:00:00', '2018-10-30 12:05:00', '05:00:00', 'incidencia', 	(SELECT `id_empleado` FROM `tbl_empleado` WHERE `usuario_empleado` = 'usuario01'), (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'salón de actos 1'));
 /*No disponibles por reservas---------------*/
 UPDATE `tbl_recurso` SET `disp_recurso` = 'no' WHERE `tbl_recurso`.`nombre_recurso` = 'móvil 2';
 UPDATE `tbl_recurso` SET `disp_recurso` = 'no' WHERE `tbl_recurso`.`nombre_recurso` = 'portátil 2';
@@ -193,7 +176,7 @@ INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `ti
 ('Sala en obras', 			'La sala multidisciplinar esta en obras.', 									'24:00:00', '2018-10-30 09:50:00', NULL, 				 	(SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala multidisciplinar 3')))),
 ('Proyector funciona mal', 	'El proyector parpadea constantemente y no se ve bien.', 					'24:00:00', '2018-10-30 09:05:00', NULL, 				 	(SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'proyector portátil 1')))),
 ('Móvil roto', 				'El móvil no se enciende', 													'24:00:00', '2018-10-30 10:35:00', NULL, 				 	(SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'móvil 1')))),
-('Escenario sin cortinas', 	'Al escenario le faltan las cortinas.', 									'24:00:00', '2018-10-30 12:05:00', NULL, 				 	(SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'sala de reuniones 1'))));
+('Escenario sin cortinas', 	'Al escenario le faltan las cortinas.', 									'24:00:00', '2018-10-30 12:05:00', NULL, 				 	(SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = (SELECT `id_recurso` FROM `tbl_recurso` WHERE `nombre_recurso` = 'salón de actos 1'))));
 /*No disponibles por incidencias---------------*/
 UPDATE `tbl_recurso` SET `disp_recurso` = 'no' WHERE `tbl_recurso`.`nombre_recurso` = 'portátil 1';
 UPDATE `tbl_recurso` SET `disp_recurso` = 'no' WHERE `tbl_recurso`.`nombre_recurso` = 'portátil 3';
