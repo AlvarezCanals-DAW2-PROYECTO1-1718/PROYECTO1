@@ -1,8 +1,7 @@
 <article>
-	<h1>Incidencias</h1>
 	<?php
 		if (isset($_REQUEST['tituloIncidencia'])) {
-			$nombre=$_REQUEST['tituloIncidencia'];
+			$tituloIncidencia=$_REQUEST['tituloIncidencia'];
 			$descripcion=$_REQUEST['descripcionIncidencia'];
 			
 			$cogerFecha = getdate();
@@ -16,7 +15,7 @@
 
 			$idRecurso = $_REQUEST['idRecursoIncidencia'];
 
-			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$nombre', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`finalizacion_reserva` = 'incidencia') AND (`id_recurso` = $idRecurso)))";
+			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$tituloIncidencia', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`finalizacion_reserva` = 'incidencia') AND (`id_recurso` = $idRecurso)))";
 			$consulta = mysqli_query($link, $query);
 			header('Location: index.php?mostrar=incidencias');
 		}
@@ -42,23 +41,24 @@
 					echo "<div class='columna'>Añadir</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
-					$nombre = $array['titulo_incidencia'];
-					$tipo = $array['descripcion_incidencia'];
-					$tiempoEstimado=$array['tiempoEstimado_incidencia'];
-					$fechaInicio=$array['fechaInicio_incidencia'];
+					$idIncidencia = $array['id_incidencia'];
+					$tituloIncidencia = $array['titulo_incidencia'];
+					$descripcion = $array['descripcion_incidencia'];
+					$tiempoEstimado = $array['tiempoEstimado_incidencia'];
+					$fechaInicio = $array['fechaInicio_incidencia'];
 					$fechaFin = $array['fechaFinal_incidencia'];
 					$disponible = $array['dispRecurso_incidencia'];
 					echo "<div class='fila'>";
-						echo "<div class='columna'>$nombre</div>";
-						echo "<div class='columna'>$tipo</div>";
+						echo "<div class='columna'>$tituloIncidencia</div>";
+						echo "<div class='columna'>$descripcion</div>";
 						echo "<div class='columna'>$tiempoEstimado</div>";
 						echo "<div class='columna'>$fechaInicio</div>";
 						echo "<div class='columna'>$fechaFin</div>";
 						echo "<div class='columna'>$disponible</div>";
-						echo "<div class='columna'><a href='#mostrarFinalizarIncidencia'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
+						echo "<div class='columna'><a href='index.php?mostrar=incidencias&idIncidencia=$idIncidencia#mostrarFinalizarIncidencia'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
 					echo "</div>";
 				}
-			}else{
+			} else {
 				echo "Aún no tienes ninguna reserva";
 			}
 		echo "</div>";
@@ -83,12 +83,13 @@
 						<option value="">-- Selecciona --</option>
 						<?php
 							/*falta inner para que solo se muestren los recursos que estan en una reserva*/
-							$consulta=mysqli_query($link, "SELECT * FROM `tbl_recurso` INNER JOIN `tbl_reserva` ON `tbl_recurso`.`id_recurso`=`tbl_reserva`.`id_recurso` WHERE `tbl_reserva`.`id_empleado`='$usuario' ORDER BY `id_recurso`");
+							$query = "SELECT * FROM `tbl_recurso` INNER JOIN `tbl_reserva` ON `tbl_recurso`.`id_recurso`=`tbl_reserva`.`id_recurso` WHERE `tbl_reserva`.`id_empleado`='$idUsuario' ORDER BY `tbl_recurso`.`id_recurso`";
+							$consulta=mysqli_query($link, $query);
 							if(mysqli_num_rows($consulta)>0) {
 								while($array = mysqli_fetch_array($consulta)) {
-									$id = $array['id_recurso'];
-									$nombre = $array['nombre_recurso'];									
-									echo "<option value='$id'>$nombre</option>";
+									$idRecurso = $array['id_recurso'];
+									$nombreRecurso = $array['nombre_recurso'];									
+									echo "<option value='$idRecurso'>$nombreRecurso</option>";
 								}
 							}
 						?>

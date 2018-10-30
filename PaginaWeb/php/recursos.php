@@ -1,15 +1,18 @@
 <article>
-	<h1>Recursos</h1>
 	<?php
 		if (isset($_REQUEST['nombreRecurso'])) {
-			$nombreRec=$_REQUEST['nombreRecurso'];
-			$descRec=$_REQUEST['descripcionRecurso'];
-			$rutaImg=$_REQUEST['ruta'];
-			$imgNombre=$_REQUEST['nombreImg'];
-			$extImg=$_REQUEST['extensionArchivo'];	
-			$tipoRec = $_REQUEST['tipoRecurso'];
-			$text_query1="INSERT INTO `tbl_recurso` ( `rutaArchivos_recurso`, `nombreArchivos_recurso`, `extensionArchivos_recurso`, `nombre_recurso`, `descripcion_recurso`, `tipo_recurso`, `disp_recurso`) VALUES ('$rutaImg', '$imgNombre', '$extImg', '$nombreRec', '$descRec', '$tipoRec', 'si');";
-			mysqli_query($link,$text_query1);
+			$nombreRec = $_REQUEST['nombreRecurso'];
+			$descRec = $_REQUEST['descripcionRecurso'];
+			$imgNombre = $_REQUEST['nombreImg'];
+			$idTipoRec = $_REQUEST['idTipoRec'];
+			$query="INSERT INTO `tbl_recurso` (`nombreArchivos_recurso`, `nombre_recurso`, `descripcion_recurso`, `disp_recurso`, `id_tipoRecurso`) VALUES ('$imgNombre', '$nombreRec', '$descRec', 'si', '$idTipoRec');";
+			mysqli_query($link,$query);
+			header('Location: index.php');
+		}
+		if (isset($_REQUEST['nombreTipoRecurso'])) {
+			$nombreTipoRec = $_REQUEST['nombreTipoRecurso'];
+			$query="INSERT INTO `tbl_tiporecurso` (`nombre_tipoRecurso`) VALUES ('$nombreTipoRec');";
+			mysqli_query($link,$query);
 			header('Location: index.php');
 		}
 
@@ -19,14 +22,12 @@
 				echo "<div class='fila encabezado'>";
 					echo "<div class='columna'>Imagen</div>";
 					echo "<div class='columna'>Nombre</div>";
-					echo "<div class='columna'>Tipo</div>";
 					echo "<div class='columna'>Disponibilidad</div>";
 					echo "<div class='columna'>Reservar</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$idRecurso=$array['id_recurso'];
 					$nombre = $array['nombre_recurso'];
-					$tipo = $array['tipo_recurso'];
 					$disponible = $array['disp_recurso'];
 					$rutaImagen = $array['rutaArchivos_recurso'];
 					$nombreImagen = $array['nombreArchivos_recurso'];
@@ -35,10 +36,9 @@
 					echo "<div class='fila'>";
 						echo "<div class='columna'><img class='imgRecursos' src='$imagen'></div>";
 						echo "<div class='columna'>$nombre</div>";
-						echo "<div class='columna'>$tipo</div>";
 						echo "<div class='columna'>$disponible</div>";
 						if ($disponible == 'si') {
-							echo "<div class='columna'><a href='#mostrarAñadirReserva$idRecurso'><input type='button' value='Reservar'></a></div>";
+							echo "<div class='columna'><a href='index.php?idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
 						} else {
 							echo "<div class='columna'><input class='desabilitado' type='button' value='Reservar'></div>";
 						}
@@ -73,68 +73,74 @@
 				<form action='index.php?mostrar=recursos' method='POST'>
 					<label>Nombre Recurso:</label>
 					<input type='text' name='nombreRecurso' placeholder='Nombre del recurso'>
-					<br><br><br>
+					<br style='clear: both;'><br>
 					<label>Descripción del Recurso:</label>
 					<textarea rows='10' cols='70' name='descripcionRecurso' placeholder='Descripcion del recurso'></textarea>
+					<br style='clear: both;'><br>
+					<label>Nombre de la imagen:</label>
+					<input type="text" name="nombreImg">
+					<br style='clear: both;'><br>
 					<label>Tipo de Recurso:</label>
-					<select name="tipoRecurso">
+					<select name="idTipoRec">
 						<option value="">-- Selecciona --</option>
 						<?php
 							/*falta inner para que solo se muestren los recursos que estan en una reserva*/
-							$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso GROUP BY tipo_recurso ORDER BY id_recurso");
+							$consulta=mysqli_query($link, "SELECT * FROM tbl_tiporecurso ORDER BY id_tipoRecurso");
 							if(mysqli_num_rows($consulta)>0) {
 								while($array = mysqli_fetch_array($consulta)) {
-									$id = $array['id_recurso'];
-									$tiporec = $array['tipo_recurso'];									
-									echo "<option value='$id'>$tiporec</option>";
+									$idTipoRecurso = $array['id_tipoRecurso'];
+									$nombreTipoRecurso = $array['nombre_tipoRecurso'];									
+									echo "<option value='$idTipoRecurso'>$nombreTipoRecurso</option>";
 								}
 							}
 						?>
 					</select>
-					<br><br><br>
-					<label>Ruta de la imagen</label>
-					<input type="text" name="ruta"><br>
-					<label>Nombre de la imagen</label>
-					<input type="text" name="nombreImg"><br><br>
-					<label>Extension de la imagen</label>
-					<input type="text" name="extensionArchivo"><br><br>
+					<br style='clear: both;'><br>
+					<input type='submit' value='Enviar'>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div id='mostrarAñadirTipoRecurso' class='divEmergente'>
+		<div class='subDivEmergente'>
+			<a href='#close' title='Close' class='close'>X</a>
+			<h3 class='ventanaModal'>Añadir Tipo Recurso</h3>
+			<div class='formularios'>
+				<form action='index.php?mostrar=recursos' method='POST'>
+					<label>Nombre Tipo Recurso:</label>
+					<input type='text' name='nombreTipoRecurso' placeholder='Nombre del tipo de recurso'>
+					<br style='clear: both;'><br>
+					<input type='submit' value='Enviar'>
+				</form>
+			</div>
+		</div>
+	</div>
+	<?php
+		if (isset($_REQUEST['idRecurso'])) {
+			$idRecurso = $_REQUEST['idRecurso'];
+		}
+	?>
+	<div id="mostrarAñadirReserva" class='divEmergente'>
+		<div class='subDivEmergente'>
+			<a href='#close' title='Close' class='close'>X</a>
+			<h3 class='ventanaModal'>Añadir Reserva</h3>
+			<div class='formularios'>
+				<form action='index.php?mostrar=reservas' method='POST'>
+					<label>Tiempo aproximado</label>
+					<input type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
+					<br><br>
+					<label>Descripción reserva:</label>
+					<textarea rows='10' cols='70' name='descripcionReserva' placeholder='Indica brevemente tu reserva'></textarea>
+					<input type="hidden" name="idRecurso" value=<?php echo"$idRecurso" ?>>
+					<br><br>
 					<br style='clear: both;'>
 					<input type='submit' value='Enviar'>
 				</form>
 			</div>
 		</div>
 	</div>
-
-	<?php
-		$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
-		if(mysqli_num_rows($consulta)>0) {
-			while($array = mysqli_fetch_array($consulta)) {
-				$idRecurso = $array['id_recurso'];
-				?>
-					<div id=<?php echo"mostrarAñadirReserva$idRecurso" ?> class='divEmergente'>
-						<div class='subDivEmergente'>
-							<a href='#close' title='Close' class='close'>X</a>
-							<h3 class='ventanaModal'>Añadir Reserva</h3>
-							<div class='formularios'>
-								<form action='index.php?mostrar=reservas' method='POST'>
-									<label>Tiempo aproximado</label>
-									<input type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
-									<br><br>
-									<label>Descripción reserva:</label>
-									<textarea rows='10' cols='70' name='descripcionReserva' placeholder='Indica brevemente tu reserva'></textarea>
-									<input type="hidden" name="idRecurso" value=<?php echo"$idRecurso" ?>>
-									<br><br>
-									<br style='clear: both;'>
-									<input type='submit' value='Enviar'>
-								</form>
-							</div>
-						</div>
-					</div>
-				<?php
-			}
-		}
-	?>
 				
-	<a href="#mostrarAñadirRecurso"><input type="button" value="Añadir"></a>
+	<a href="#mostrarAñadirRecurso"><input type="button" value="Añadir Recurso"></a>
+	<a href="#mostrarAñadirTipoRecurso"><input type="button" value="Añadir Tipo Recurso"></a>
 	<!-- <a href="index.php?insertaRecurso=si">Insertar Recursos <i class="fas fa-plus-square"></i></a><br> -->
 </article>
