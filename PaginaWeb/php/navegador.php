@@ -9,15 +9,25 @@
 		<?php
 			$nombreUsuario = $usuario['usuario_empleado'];
 			$idUsuario = $usuario['id_empleado'];
-			
-			// if ($user['grupo']=='administrador')
-			echo "<li class='usuario'><a>".$nombreUsuario."</a>";
-				echo "<ul class=ul2>";
-					echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=reservas&idUsu=$idUsuario'>Mis Reservas</a></li>";
-					echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=incidencias&idUsu=$idUsuario'>Mis Incidencias</a></li>";
-					echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=cerrarSesion'>Cerrar sesion</a></li>";
-				echo "</ul>";
-			echo "</li>";
+			$grupoUsuario = $usuario['grupo_empleado'];
+			if ($grupoUsuario !== 'administradores') {
+				echo "<li class='usuario'><a>".$nombreUsuario."</a>";
+					echo "<ul class=ul2>";
+						echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=reservas&idUsu=$idUsuario'>Mis Reservas</a></li>";
+						echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=incidencias&idUsu=$idUsuario'>Mis Incidencias</a></li>";
+						echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=cerrarSesion'>Cerrar sesion</a></li>";
+					echo "</ul>";
+				echo "</li>";
+			} else {
+				echo "<li class='usuario'><a>".$nombreUsuario."</a>";
+					echo "<ul class=ul2>";
+						echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=reservas&idUsu=$idUsuario'>Incidencias por empezar</a></li>";
+						echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=incidencias&idUsu=$idUsuario'>Incidencias por acabar</a></li>";
+						echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=incidencias&idUsu=$idUsuario'>Añadir productos</a></li>";
+						echo "<li class='usuario2'><a class=usuario href='index.php?mostrar=cerrarSesion'>Cerrar sesion</a></li>";
+					echo "</ul>";
+				echo "</li>";
+			}
 
 			/*echo "<a href='index.php?mostrar=cerrarSesion'>Cerrar sesion</a>";*/
 		?>

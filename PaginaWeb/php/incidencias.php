@@ -15,7 +15,14 @@
 
 			$idRecurso = $_REQUEST['idRecursoIncidencia'];
 
-			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$tituloIncidencia', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`finalizacion_reserva` = 'incidencia') AND (`id_recurso` = $idRecurso)))";
+			$query="SET @sub = (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`id_recurso` = $idRecurso) AND (`fechaFinal_reserva` IS NULL));";
+			$consulta = mysqli_query($link, $query);
+
+			$query="UPDATE `tbl_reserva` SET `fechaFinal_reserva` = '$fecha', `modoFinalizacion_reserva` = 'incidencia' WHERE `id_reserva` = @sub";
+			$consulta = mysqli_query($link, $query);
+
+			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$tituloIncidencia', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = $idRecurso)))";
+			echo "$query";
 			$consulta = mysqli_query($link, $query);
 			header('Location: index.php?mostrar=incidencias');
 		}
@@ -37,7 +44,6 @@
 					echo "<div class='columna'>Tiempo aproximado</div>";
 					echo "<div class='columna'>Fecha inicio</div>";
 					echo "<div class='columna'>Fecha fin</div>";
-					echo "<div class='columna'>Disponibilidad durante incidencia</div>";
 					echo "<div class='columna'>Añadir</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
@@ -47,14 +53,12 @@
 					$tiempoEstimado = $array['tiempoEstimado_incidencia'];
 					$fechaInicio = $array['fechaInicio_incidencia'];
 					$fechaFin = $array['fechaFinal_incidencia'];
-					$disponible = $array['dispRecurso_incidencia'];
 					echo "<div class='fila'>";
 						echo "<div class='columna'>$tituloIncidencia</div>";
 						echo "<div class='columna'>$descripcion</div>";
 						echo "<div class='columna'>$tiempoEstimado</div>";
 						echo "<div class='columna'>$fechaInicio</div>";
 						echo "<div class='columna'>$fechaFin</div>";
-						echo "<div class='columna'>$disponible</div>";
 						echo "<div class='columna'><a href='index.php?mostrar=incidencias&idIncidencia=$idIncidencia#mostrarFinalizarIncidencia'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
 					echo "</div>";
 				}

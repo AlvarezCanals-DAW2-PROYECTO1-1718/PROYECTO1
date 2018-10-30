@@ -25,9 +25,10 @@
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
 			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva WHERE id_empleado='$us' ORDER BY id_reserva");
+			$boton = true;
 		}else {
 			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva ORDER BY id_reserva");
-
+			$boton = false;
 		}
 		echo "<div class='tabla'>";
 			if(mysqli_num_rows($consulta)>0) {
@@ -37,8 +38,12 @@
 					echo "<div class='columna'>Fecha final</div>";
 					echo "<div class='columna'>Tiempo aproximado</div>";
 					echo "<div class='columna'>Modo finalizacion</div>";
+					if ($boton) {
+						echo "<div class='columna'>Boton</div>";
+					}
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
+					$idReserva=$array['id_reserva'];
 					$fechaInicio=$array['fechaInicio_reserva'];
 					$fechaFin = $array['fechaFinal_reserva'];
 					$tiempoEstimado=$array['tiempoEstimado_reserva'];
@@ -48,6 +53,9 @@
 						echo "<div class='columna'>$fechaFin</div>";
 						echo "<div class='columna'>$tiempoEstimado</div>";
 						echo "<div class='columna'>$modoFinalizacion</div>";
+						if ($boton) {
+							echo "<div class='columna'><a href='index.php?mostrar=reservas&idUsu=2&idReserva=$idReserva#mostrarFinalizarReserva'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
+						}
 					echo "</div>";
 				}
 			}
