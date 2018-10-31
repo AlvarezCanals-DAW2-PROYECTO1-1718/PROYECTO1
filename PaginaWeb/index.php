@@ -51,10 +51,13 @@
 								echo "Error";
 								break;
 						}
-						//include "php/filtros.php";
 					}
 				?></section><?php
 			}
 		?>
+		<footer>
+			<p>Recursos</p>
+			<p class="footer">Adrian Canals</p> | <p class="footer">Daniel Alvarez</p>
+		</footer>
 	</body>
 </html>

@@ -4,7 +4,7 @@
 		if ($grupoUsuario == 'administradores') {
 			echo "<a href='#mostrarAñadirRecurso'><input type='button' value='Añadir Recurso'></a>";
 		}
-	
+		
 		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['nombreRecurso'])) {
 			$nombreRec = $_REQUEST['nombreRecurso'];
@@ -24,6 +24,7 @@
 
 		$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
 		echo "<div class='tabla tablaRecursos'>";
+			include "php/filtros.php";
 			if(mysqli_num_rows($consulta)>0) {
 				while($array = mysqli_fetch_array($consulta)) {
 					$idRecurso=$array['id_recurso'];
@@ -69,19 +70,19 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Añadir Recurso</h3>
 			<div class='formularios'>
-				<form action='index.php?mostrar=recursos' method='POST'>
+				<form name="formValidar1" action='index.php?mostrar=recursos' method='POST'>
 					<label>Nombre Recurso:</label>
-					<input type='text' name='nombreRecurso' placeholder='Nombre del recurso'>
+					<input class="formValidar1" type='text' name='nombreRecurso' placeholder='Nombre del recurso'>
 					<br style='clear: both;'><br>
 					<label>Descripción del Recurso:</label>
-					<textarea rows='10' cols='70' name='descripcionRecurso' placeholder='Descripcion del recurso'></textarea>
+					<textarea class="formValidar1" rows='10' cols='70' name='descripcionRecurso' placeholder='Descripcion del recurso'></textarea>
 					<br style='clear: both;'><br>
 					<label>Nombre de la imagen:</label>
-					<input type="text" name="nombreImg">
+					<input class="formValidar1" type="text" name="nombreImg">
 					<br style='clear: both;'><br>
 					<label>Tipo de Recurso:</label>
-					<select name="idTipoRec">
-						<option value="">-- Selecciona --</option>
+					<select class="formValidar1" name="idTipoRec">
+						<option value="" class="opHidden">-- selecciona --</option>
 						<?php
 							/*falta inner para que solo se muestren los recursos que estan en una reserva*/
 							$consulta=mysqli_query($link, "SELECT * FROM tbl_tiporecurso ORDER BY id_tipoRecurso");
@@ -93,6 +94,7 @@
 								}
 							}
 						?>
+						<option value='El campo es obligatorio' class="opHidden">El campo es obligatorio</option>
 					</select><br>
 					<a href="#mostrarAñadirTipoRecurso"><input type="button" value="Añadir Tipo Recurso"></a>
 					<br style='clear: both;'><br>
@@ -106,9 +108,9 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Añadir Tipo Recurso</h3>
 			<div class='formularios'>
-				<form action='index.php?mostrar=recursos' method='POST'>
+				<form name="formValidar2" action='index.php?mostrar=recursos' method='POST'>
 					<label>Nombre Tipo Recurso:</label>
-					<input type='text' name='nombreTipoRecurso' placeholder='Nombre del tipo de recurso'>
+					<input class="formValidar2" type='text' name='nombreTipoRecurso' placeholder='Nombre del tipo de recurso'>
 					<br style='clear: both;'><br>
 					<input type='submit' value='Enviar'>
 				</form>
@@ -125,13 +127,13 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Añadir Reserva</h3>
 			<div class='formularios'>
-				<form action='index.php?mostrar=reservas' method='POST'>
+				<form name="formValidar3" action='index.php?mostrar=reservas' method='POST'>
 					<label>Tiempo aproximado:</label>
-					<input type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
+					<input class="formValidar3" type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
 					<br><br>
 					<br style='clear: both;'>
 					<label>Descripción reserva:</label>
-					<textarea rows='10' cols='70' name='descripcionReserva' placeholder='Indica brevemente tu reserva'></textarea>
+					<textarea class="formValidar3" rows='10' cols='70' name='descripcionReserva' placeholder='Indica brevemente tu reserva'></textarea>
 					<input type="hidden" name="idRecurso" value=<?php echo"$idRecurso" ?>>
 					<br><br>
 					<br style='clear: both;'>
@@ -140,9 +142,5 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
 	<!-- <a href="index.php?insertaRecurso=si">Insertar Recursos <i class="fas fa-plus-square"></i></a><br> -->
 </article>

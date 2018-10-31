@@ -1,6 +1,19 @@
 input, textarea {
 	background-color: #dadada;
 }
+form.filtro {
+    width: auto;
+    float: left;
+    margin: 10px 29px;
+}
+select.filtro {
+	float: none !important;
+	width: auto !important;
+}
+div.contenedorFiltros {
+	background-color: #c1c1c1;
+	overflow: hidden;
+}
 /*login---------------------------------------------------------------------------------------------------------------------------*/
 input[type="text"].login, input[type="password"].login {
 	outline: none;
@@ -26,6 +39,20 @@ input[type="submit"].login {
 }
 input[type="submit"].login:hover {
 	background-color: #D00206;
+}
+/*Buscador------------------------------------------------------------------------------------------------------------------------*/
+input[type="search"].buscar {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    height: 25px;
+    padding: 5px;
+    float: none;
+    display: inherit;
+}
+input[type="submit"].buscar {
+    float: left;
+    margin: 3px;
+    /* text-align: left; */
 }
 /*Otros---------------------------------------------------------------------------------------------------------------------------*/
 div.formularios {

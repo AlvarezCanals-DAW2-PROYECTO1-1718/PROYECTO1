@@ -103,18 +103,18 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Añadir Incidencia</h3>
 			<div class='formularios'>
-				<form action=<?php echo "index.php?mostrar=incidencias&idUsu=$idUsuario "; ?> method='POST'>
+				<form name="formValidar1" action=<?php echo "index.php?mostrar=incidencias&idUsu=$idUsuario "; ?> method='POST'>
 					<label>Titulo incidencia:</label>
-					<input type='text' name='tituloIncidencia' placeholder='Titulo de la incidencia'>
+					<input class="formValidar1" type='text' name='tituloIncidencia' placeholder='Titulo de la incidencia'>
 					<br><br><br>
 					<label>Descripción incidencia:</label>
-					<textarea rows='10' cols='70' name='descripcionIncidencia' placeholder='Descripción de la Incidencia'></textarea>
+					<textarea class="formValidar1" rows='10' cols='70' name='descripcionIncidencia' placeholder='Descripción de la Incidencia'></textarea>
 					<br><br>
 					<br style='clear: both;'>
 					<br>
 					<label>Recurso incidencia:</label>
-					<select name="idRecursoIncidencia">
-						<option value="">-- Selecciona --</option>
+					<select class="formValidar1" name="idRecursoIncidencia">
+						<option value="" class="opHidden">-- selecciona --</option>
 						<?php
 							$query = "SELECT * FROM `tbl_recurso` INNER JOIN `tbl_reserva` ON `tbl_recurso`.`id_recurso`=`tbl_reserva`.`id_recurso` WHERE `tbl_reserva`.`id_empleado`='$idUsuario' AND `tbl_reserva`.`modoFinalizacion_reserva` IS NULL ORDER BY `tbl_recurso`.`id_recurso`";
 							$consulta=mysqli_query($link, $query);
@@ -126,6 +126,7 @@
 								}
 							}
 						?>
+						<option value='El campo es obligatorio' class="opHidden">El campo es obligatorio</option>
 					</select>
 					<br style='clear: both;'>
 					<input type='submit' value='Enviar'>
@@ -143,9 +144,9 @@
 			<a href='#close' title='Close' class='close'>X</a>
 			<h3 class='ventanaModal'>Empezar Incidencia</h3>
 			<div class='formularios'>
-				<form action='index.php?mostrar=incidencias' method='POST'>
+				<form name="formValidar2" action='index.php?mostrar=incidencias' method='POST'>
 					<label>Tiempo aproximado:</label>
-					<input type='time' name='tiempoEstimado_incidencia' placeholder='Tiempo Estimado'>
+					<input class="formValidar2" type='time' name='tiempoEstimado_incidencia' placeholder='Tiempo Estimado'>
 					<input type="hidden" name="idIncidenciaEmpezar" value=<?php echo"$idIncidencia" ?>>
 					<br><br>
 					<br style='clear: both;'>

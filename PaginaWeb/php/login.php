@@ -16,10 +16,10 @@
 		}
 		?>
 		<h1>Inicia Sesión</h1>
-		<form action="index.php" method="POST">
-			<input class=login name="email" type="text" placeholder="Direccion de email / Nombre usuario*" required>
-			<input class=login name="password" type="password" placeholder="Contraseña*" required>
-			<input class=login type="submit" value="Submit">
+		<form name="formValidar1" action="index.php" method="POST">
+			<input class="login formValidar1" name="email" type="text" placeholder="Direccion de email / Nombre usuario*">
+			<input class="login formValidar1" name="password" type="password" placeholder="Contraseña*" >
+			<input class="login" type="submit" value="Submit">
 		</form>
 		<?php
 		if (!empty($message)) {
