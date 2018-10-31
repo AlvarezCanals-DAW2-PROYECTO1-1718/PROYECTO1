@@ -51,11 +51,11 @@
 			if(mysqli_num_rows($consulta)>0) {
 				echo "<div class='fila encabezado'>";
 					/*falta hacer el inner y ver el producto y el usuario*/
-					echo "<div class='columna'>Titulo</div>";
-					echo "<div class='columna'>Descripcion</div>";
-					echo "<div class='columna'>Tiempo aproximado</div>";
-					echo "<div class='columna'>Fecha inicio</div>";
-					echo "<div class='columna'>Fecha fin</div>";
+					echo "<div class='columna noRecursos'>Titulo</div>";
+					echo "<div class='columna noRecursos'>Descripcion</div>";
+					echo "<div class='columna noRecursos'>Tiempo aproximado</div>";
+					echo "<div class='columna noRecursos'>Fecha inicio</div>";
+					echo "<div class='columna noRecursos'>Fecha fin</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$idIncidencia = $array['id_incidencia'];
@@ -65,11 +65,11 @@
 					$fechaInicio = $array['fechaInicio_incidencia'];
 					$fechaFin = $array['fechaFinal_incidencia'];
 					echo "<div class='fila'>";
-						echo "<div class='columna'>$tituloIncidencia</div>";
-						echo "<div class='columna'>$descripcion</div>";
-						echo "<div class='columna'>$tiempoEstimado</div>";
-						echo "<div class='columna'>$fechaInicio</div>";
-						echo "<div class='columna'>$fechaFin</div>";
+						echo "<div class='columna noRecursos'>$tituloIncidencia</div>";
+						echo "<div class='columna noRecursos'>$descripcion</div>";
+						echo "<div class='columna noRecursos'>$tiempoEstimado</div>";
+						echo "<div class='columna noRecursos'>$fechaInicio</div>";
+						echo "<div class='columna noRecursos'>$fechaFin</div>";
 						if ($grupoUsuario == 'administradores') {
 							
 							$queryBoton="SELECT * FROM `tbl_reserva` INNER JOIN `tbl_incidencia` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` WHERE `id_incidencia` = '$idIncidencia'";
@@ -78,9 +78,9 @@
 								while($array2 = mysqli_fetch_array($consultaBoton)) {
 									$idRecurso = $array2['id_recurso'];
 									if ($tiempoEstimado == NULL) {
-										echo "<div class='columna'><a href='index.php?mostrar=incidencias&idIncidencia=$idIncidencia#mostrarEmpezarIncidencia'><input class='añadir-lista' type='button' value='Empezar'></a></div>";
+										echo "<div class='columna noRecursos'><a href='index.php?mostrar=incidencias&idIncidencia=$idIncidencia#mostrarEmpezarIncidencia'><input class='añadir-lista' type='button' value='Empezar'></a></div>";
 									} elseif($fechaFin == NULL) {
-										echo "<div class='columna'><a href='index.php?mostrar=incidencias&idIncidenciaFinalizar=$idIncidencia&idRecurso=$idRecurso'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
+										echo "<div class='columna noRecursos'><a href='index.php?mostrar=incidencias&idIncidenciaFinalizar=$idIncidencia&idRecurso=$idRecurso'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
 									}
 								}
 							}

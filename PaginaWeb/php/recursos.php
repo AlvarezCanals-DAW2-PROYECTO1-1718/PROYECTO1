@@ -18,13 +18,8 @@
 		}
 
 		$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
-		echo "<div class='tabla'>";
+		echo "<div class='tabla tablaRecursos'>";
 			if(mysqli_num_rows($consulta)>0) {
-				echo "<div class='fila encabezado'>";
-					echo "<div class='columna'>Imagen</div>";
-					echo "<div class='columna'>Nombre</div>";
-					echo "<div class='columna'>Disponibilidad</div>";
-				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$idRecurso=$array['id_recurso'];
 					$nombre = $array['nombre_recurso'];
@@ -33,14 +28,13 @@
 					$nombreImagen = $array['nombreArchivos_recurso'];
 					$extensionImagen = $array['extensionArchivos_recurso'];
 					$imagen = $rutaImagen.$nombreImagen.$extensionImagen;
-					echo "<div class='fila'>";
-						echo "<div class='columna'><img class='imgRecursos' src='$imagen'></div>";
-						echo "<div class='columna'>$nombre</div>";
-						echo "<div class='columna'>$disponible</div>";
+					echo "<div class='fila filaRecursos'>";
+						echo "<div class='columna columnaRecursos'><img class='imgRecursos' src='$imagen'></div>";
+						echo "<div class='columna columnaRecursos'>$nombre</div>";
 						if ($disponible == 'si') {
-							echo "<div class='columna'><a href='index.php?idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							echo "<div class='columna columnaRecursos'><a href='index.php?idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
 						} else {
-							echo "<div class='columna'><input class='desabilitado' type='button' value='Reservar'></div>";
+							echo "<div class='columna columnaRecursos'><input class='desabilitado' type='button' value='Reservar'></div>";
 						}
 						
 					echo "</div>";

@@ -24,10 +24,10 @@
 		</header>
 
 		<?php
+			include "php/navegador.php";
 			if (!isset($_SESSION['user_id'])) {
 				include "php/login.php";
 			} else {
-				include "php/navegador.php";
 				?><section><?php
 					if (!isset($_REQUEST['mostrar'])) {
 						include "php/recursos.php";

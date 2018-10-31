@@ -17,7 +17,7 @@
 		?>
 		<h1>Inicia Sesión</h1>
 		<form action="index.php" method="POST">
-			<input class=login name="email" type="text" placeholder="Direccion de email*" required>
+			<input class=login name="email" type="text" placeholder="Direccion de email / Nombre usuario*" required>
 			<input class=login name="password" type="password" placeholder="Contraseña*" required>
 			<input class=login type="submit" value="Submit">
 		</form>

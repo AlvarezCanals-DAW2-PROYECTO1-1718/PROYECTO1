@@ -1,3 +1,6 @@
+input, textarea {
+	background-color: #dadada;
+}
 /*login---------------------------------------------------------------------------------------------------------------------------*/
 input[type="text"].login, input[type="password"].login, input[type="date"].login, select.login, textarea.login {
 	outline: none;
@@ -19,6 +22,7 @@ input[type="submit"].login {
 	border: 0;
 	border-radius: 3px;
 	cursor: pointer;
+	float: none;
 }
 input[type="submit"].login:hover {
 	background-color: #D00206;
@@ -97,6 +101,7 @@ select {
 	width: 230px;
 }
 .desabilitado {
-	background-color: #D3D3D3 !important;
+	/*background-color: #D3D3D3 !important;*/
+	background-color:#abaaaa !important;
 	cursor: default !important;
 }
