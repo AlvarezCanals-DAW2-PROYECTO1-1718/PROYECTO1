@@ -44,6 +44,9 @@ div.columna.noRecursos {
     background: #525050;
     padding: 5px;
     border-radius: 5px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 /*----------------------------------------------*/
 div.fila.filaRecursos.colorDisponible {

@@ -42,33 +42,40 @@
 		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
-			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva WHERE id_empleado='$us' ORDER BY id_reserva");
+			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` WHERE id_empleado='$us' ORDER BY id_reserva");
 			$boton = true;
 		} else {
-			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva ORDER BY id_reserva");
+			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` ORDER BY id_reserva");
 			$boton = false;
 		}
 
 		echo "<div class='tabla'>";
 			if(mysqli_num_rows($consulta)>0) {
 				echo "<div class='fila encabezado'>";
-					/*falta hacer el inner y ver el producto y el usuario*/
+					echo "<div class='columna noRecursos'>Recurso</div>";
+					echo "<div class='columna noRecursos'>Descripción</div>";
 					echo "<div class='columna noRecursos'>Fecha inicio</div>";
 					echo "<div class='columna noRecursos'>Fecha final</div>";
 					echo "<div class='columna noRecursos'>Tiempo aproximado</div>";
-					echo "<div class='columna noRecursos'>Modo finalizacion</div>";
+					echo "<div class='columna noRecursos'>Empleado</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
-					$idReserva=$array['id_reserva'];
-					$fechaInicio=$array['fechaInicio_reserva'];
+					$idReserva = $array['id_reserva'];
+					$descripcion = $array['descripcion_reserva'];
+					$fechaInicio = $array['fechaInicio_reserva'];
 					$fechaFin = $array['fechaFinal_reserva'];
-					$tiempoEstimado=$array['tiempoEstimado_reserva'];
+					$tiempoEstimado = $array['tiempoEstimado_reserva'];
 					$modoFinalizacion = $array['modoFinalizacion_reserva'];
+					/*del inner-------------------------------------*/
+					$recurso = $array['nombre_recurso'];
+					$empleado = $array['usuario_empleado'];
 					echo "<div class='fila'>";
+						echo "<div class='columna noRecursos'>$recurso</div>";
+						echo "<div class='columna noRecursos'>$descripcion</div>";
 						echo "<div class='columna noRecursos'>$fechaInicio</div>";
 						echo "<div class='columna noRecursos'>$fechaFin</div>";
 						echo "<div class='columna noRecursos'>$tiempoEstimado</div>";
-						echo "<div class='columna noRecursos'>$modoFinalizacion</div>";
+						echo "<div class='columna noRecursos'>$empleado</div>";
 						
 						$queryBoton="SELECT * FROM `tbl_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso`=`tbl_recurso`.`id_recurso` WHERE `id_reserva` = '$idReserva'";
 						$consultaBoton = mysqli_query($link, $queryBoton);

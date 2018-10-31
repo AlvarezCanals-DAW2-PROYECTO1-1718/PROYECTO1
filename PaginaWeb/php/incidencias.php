@@ -40,22 +40,23 @@
 		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
-			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` WHERE `tbl_reserva`.`id_empleado`='$us' ORDER BY `id_incidencia`");
+			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` WHERE `tbl_reserva`.`id_empleado`='$us' ORDER BY `id_incidencia`");
 			$boton = true;
 		}else{
-			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` ORDER BY `id_incidencia`");
+			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` ORDER BY `id_incidencia`");
 			$boton = false;
 		}
 		
 		echo "<div class='tabla'>";
 			if(mysqli_num_rows($consulta)>0) {
 				echo "<div class='fila encabezado'>";
-					/*falta hacer el inner y ver el producto y el usuario*/
+					echo "<div class='columna noRecursos'>Recurso</div>";
 					echo "<div class='columna noRecursos'>Titulo</div>";
 					echo "<div class='columna noRecursos'>Descripcion</div>";
 					echo "<div class='columna noRecursos'>Tiempo aproximado</div>";
 					echo "<div class='columna noRecursos'>Fecha inicio</div>";
 					echo "<div class='columna noRecursos'>Fecha fin</div>";
+					echo "<div class='columna noRecursos'>Empleado</div>";
 				echo "</div>";
 				while($array = mysqli_fetch_array($consulta)) {
 					$idIncidencia = $array['id_incidencia'];
@@ -64,14 +65,19 @@
 					$tiempoEstimado = $array['tiempoEstimado_incidencia'];
 					$fechaInicio = $array['fechaInicio_incidencia'];
 					$fechaFin = $array['fechaFinal_incidencia'];
+					/*del inner-------------------------------------*/
+					$recurso = $array['nombre_recurso'];
+					$empleado = $array['usuario_empleado'];
 					echo "<div class='fila'>";
+						echo "<div class='columna noRecursos'>$recurso</div>";
 						echo "<div class='columna noRecursos'>$tituloIncidencia</div>";
 						echo "<div class='columna noRecursos'>$descripcion</div>";
 						echo "<div class='columna noRecursos'>$tiempoEstimado</div>";
 						echo "<div class='columna noRecursos'>$fechaInicio</div>";
 						echo "<div class='columna noRecursos'>$fechaFin</div>";
+						echo "<div class='columna noRecursos'>$empleado</div>";
+
 						if ($grupoUsuario == 'administradores') {
-							
 							$queryBoton="SELECT * FROM `tbl_reserva` INNER JOIN `tbl_incidencia` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` WHERE `id_incidencia` = '$idIncidencia'";
 							$consultaBoton = mysqli_query($link, $queryBoton);
 							if(mysqli_num_rows($consulta)>0) {
