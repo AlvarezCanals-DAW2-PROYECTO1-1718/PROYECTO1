@@ -1,5 +1,10 @@
 <article>
 	<?php
+
+		if ($grupoUsuario == 'administradores') {
+			echo "<a href='#mostrarAñadirRecurso'><input type='button' value='Añadir Recurso'></a>";
+		}
+	
 		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['nombreRecurso'])) {
 			$nombreRec = $_REQUEST['nombreRecurso'];
@@ -121,9 +126,10 @@
 			<h3 class='ventanaModal'>Añadir Reserva</h3>
 			<div class='formularios'>
 				<form action='index.php?mostrar=reservas' method='POST'>
-					<label>Tiempo aproximado</label>
+					<label>Tiempo aproximado:</label>
 					<input type='time' name='tiempoEstimado_reserva' placeholder='Tiempo Estimado'>					
 					<br><br>
+					<br style='clear: both;'>
 					<label>Descripción reserva:</label>
 					<textarea rows='10' cols='70' name='descripcionReserva' placeholder='Indica brevemente tu reserva'></textarea>
 					<input type="hidden" name="idRecurso" value=<?php echo"$idRecurso" ?>>
@@ -135,11 +141,7 @@
 		</div>
 	</div>
 	
-	<?php
-		if ($grupoUsuario == 'administradores') {
-			echo "<a href='#mostrarAñadirRecurso'><input type='button' value='Añadir Recurso'></a>";
-		}
-	?>
+	
 	
 	
 	<!-- <a href="index.php?insertaRecurso=si">Insertar Recursos <i class="fas fa-plus-square"></i></a><br> -->

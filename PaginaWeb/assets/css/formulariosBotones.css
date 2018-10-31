@@ -2,7 +2,7 @@ input, textarea {
 	background-color: #dadada;
 }
 /*login---------------------------------------------------------------------------------------------------------------------------*/
-input[type="text"].login, input[type="password"].login, input[type="date"].login, select.login, textarea.login {
+input[type="text"].login, input[type="password"].login {
 	outline: none;
 	padding: 10px;
 	display: block;
@@ -39,7 +39,7 @@ form {
 	font-weight: 500;
 	font-family: roboto;
 }
-input[type="text"] {
+input[type="text"], input[type="time"] {
 	outline: none;
 	padding: 10px;
 	display: block;
@@ -65,7 +65,7 @@ input[type="button"] {
 	padding: 7px;
 	color: #fff;
 	background: #b10004;
-	width: 85px;
+	/*width: 85px;*/
 	margin-top: 8px;
 	margin-bottom: 8px;
 	border: 0;

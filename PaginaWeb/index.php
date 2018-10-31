@@ -7,7 +7,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="icon" type="image/png" href="assets/images/recursos.jpg"/>
-		<script type="text/javascript" src="assets/js/javascript.js"></script>
+		<script type="text/javascript" src="assets/js/validarFormularios.js"></script>
 		<link rel="stylesheet" type="text/css" href="assets/css/estilos.css">
 		<?php include "php/conexion.proc.php"; ?>
 		<?php include "php/datosUsuario.proc.php"; ?>

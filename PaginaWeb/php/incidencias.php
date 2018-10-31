@@ -144,7 +144,7 @@
 			<h3 class='ventanaModal'>Empezar Incidencia</h3>
 			<div class='formularios'>
 				<form action='index.php?mostrar=incidencias' method='POST'>
-					<label>Tiempo aproximado</label>
+					<label>Tiempo aproximado:</label>
 					<input type='time' name='tiempoEstimado_incidencia' placeholder='Tiempo Estimado'>
 					<input type="hidden" name="idIncidenciaEmpezar" value=<?php echo"$idIncidencia" ?>>
 					<br><br>
