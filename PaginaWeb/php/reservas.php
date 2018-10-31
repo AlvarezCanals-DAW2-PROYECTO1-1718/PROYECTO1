@@ -42,13 +42,15 @@
 		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
-			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` WHERE id_empleado='$us' ORDER BY id_reserva");
+			$query = "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` WHERE `tbl_empleado`.`id_empleado`='$us' ORDER BY `id_reserva`";
+			$consulta=mysqli_query($link, $query);
 			$boton = true;
 		} else {
-			$consulta=mysqli_query($link, "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` ORDER BY id_reserva");
+			$query = "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` ORDER BY `id_reserva`";
+			
+			$consulta=mysqli_query($link, $query);
 			$boton = false;
 		}
-
 		echo "<div class='tabla'>";
 			if(mysqli_num_rows($consulta)>0) {
 				echo "<div class='fila encabezado'>";

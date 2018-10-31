@@ -25,8 +25,7 @@ div.subDivEmergente {
 	position: relative;
 	margin: 10% auto;
 	border-radius: 4px;
-	/*background: #f7f7f7;*/ /*version clara*/
-	background: #2d2d2d; /*version oscura*/
+	background: #f7f7f7;
 	-webkit-transition: opacity 400ms ease-in;
 	-moz-transition: opacity 400ms ease-in;
 	transition: opacity 400ms ease-in;
@@ -57,13 +56,11 @@ a.close:hover {
 }
 h3.ventanaModal {
 	margin: 0px;
-	/*background-color: #f3f3f3;*/ /*version clara*/
-	background-color: #232323; /*version oscura*/
+	background-color: #d0d0d0;
 	padding: 15px;
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
-	/*border-bottom: 1px solid #e5e5e5;*/ /*version clara*/
-	border-bottom: 1px solid #000000; /*version oscura*/
+	border-bottom: 1px solid #e5e5e5;
 	font-family: Roboto,sans-serif;
 	font-size: 20px;
 	line-height: 1.5em;

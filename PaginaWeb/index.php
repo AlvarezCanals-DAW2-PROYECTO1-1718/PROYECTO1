@@ -16,7 +16,7 @@
 	<body>
 		<header>
 			<div class="cabecera">
-				<img class="imgCabecera" src="assets/images/cabecera.jpg">
+				<img class="imgCabecera" src="assets/images/cabecera2.jpg">
 			</div>
 			<div class="centrarTitulo">
 				<?php include "php/tituloCabezera.proc.php"; ?>

@@ -1,23 +1,17 @@
 * {
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box; /*es para que si se pone un pading no canvie el porcentaje*/
+	box-sizing: border-box;
 }
 nav {
-	/*background-color: #ffffff;*/ /*color fondo normal BLANCO*/
-	background-color: #b10004;
-	/*font:bold 13px "Arial"; */
+	background-color: #000000;
 	position: fixed;
 	z-index: 1000;
 	top: 0;
 	width: 100%;
-	/*box-shadow: 0px 4px 3px rgba(0,0,0,.5);*/
 	box-shadow: 0 -5px 3px 6px rgba(0,0,0,.255);
 	left: 0 !important;
-	/*font-size: 13px;*/
-	/*font-weight: 500 !important;*/
 	font-family: 'Roboto', sans-serif;
-	/*font-family: Roboto, Arial;*/
 }
 ul.nav {
 	list-style-type: none; 
@@ -51,21 +45,18 @@ nav li a {
 	display: block;
 	text-decoration: none;
 	line-height: 50px;
-	/*color: #333333;*/ /*color fetras NEGRO*/
 	color: #ffffff;
 	font-weight: 300;
 }
 nav li.nivel1:hover a, #menu_gral li a:focus {
-	background: #c00004; /*color fondo cuando pasas por encima de los principales GRIS CLARO*/
-	/*color: #FF7335;*/ /*color de las letras cuando pasas por encima de los principales NARANGA*/
+	background: #252525;
 }
 nav ul li.login:hover, nav ul li.usuario:hover {
-	background: #c00004;
+	background: #252525;
 }
 ul.ul2 {
 	position:absolute;
 	background-color: red;
-	/*width: 100%;*/
 	width: 130px;
 	display: none;
 }

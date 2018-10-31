@@ -1,5 +1,5 @@
 input, textarea {
-	background-color: #dadada;
+	background-color: #ffffff;
 }
 form.filtro {
     width: auto;
@@ -12,7 +12,10 @@ select.filtro {
 }
 div.contenedorFiltros {
 	background-color: #c1c1c1;
-	overflow: hidden;
+    overflow: hidden;
+    width: 91%;
+    margin: auto;
+    border-radius: 5px;
 }
 /*login---------------------------------------------------------------------------------------------------------------------------*/
 input[type="text"].login, input[type="password"].login {
@@ -28,7 +31,7 @@ input[type="text"].login, input[type="password"].login {
 input[type="submit"].login {
 	padding: 10px;
 	color: #fff;
-	background: #b10004;
+	background: #000000;
 	width: 300px;
 	margin: 20px auto;
 	margin-top: 0;
@@ -38,7 +41,7 @@ input[type="submit"].login {
 	float: none;
 }
 input[type="submit"].login:hover {
-	background-color: #D00206;
+	background-color: #2A2A2A;
 }
 /*Buscador------------------------------------------------------------------------------------------------------------------------*/
 input[type="search"].buscar {
@@ -79,7 +82,7 @@ input[type="text"], input[type="time"] {
 input[type="submit"] {
 	padding: 5px;
 	color: #fff;
-	background: #b10004;
+	background: #000000;
 	width: 61px;
 	border: 0;
 	border-radius: 3px;
@@ -91,7 +94,7 @@ input[type="submit"] {
 input[type="button"] {
 	padding: 7px;
 	color: #fff;
-	background: #b10004;
+	background: #000000;
 	/*width: 85px;*/
 	margin-top: 8px;
 	margin-bottom: 8px;
