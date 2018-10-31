@@ -6,3 +6,6 @@ La contraseña para acceder con cualquier usuario es: 1234
 
 Curriculum Daniel Álvarez: https://danialvrez.github.io/index.html
 Curriculum Adrián Canals: https://kalel1500.github.io/index.html
+
+Video presentacion del proyecto Adrián Canals: https://kalel1500.github.io/paginasadrian/
+Video presentacion del proyecto  Daniel Álvarez: https://danialvrez.github.io/danipaginas/
