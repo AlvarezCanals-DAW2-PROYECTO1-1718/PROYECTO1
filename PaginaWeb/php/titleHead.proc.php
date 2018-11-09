@@ -11,6 +11,9 @@
 			case 'incidencias':
 				echo "<title>Incidencias</title>";
 				break;
+			case 'formularioValidacion':
+				echo "<title>Validacion</title>";
+				break;
 			default:
 				echo "<title>Recursos</title>";
 				break;

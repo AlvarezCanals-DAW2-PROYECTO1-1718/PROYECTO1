@@ -24,7 +24,7 @@
 
 		$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
 		echo "<div class='tabla tablaRecursos'>";
-			include "php/filtros.php";
+			include "php/filtrosRecursos.php";
 			if(mysqli_num_rows($consulta)>0) {
 				while($array = mysqli_fetch_array($consulta)) {
 					$idRecurso=$array['id_recurso'];
@@ -38,7 +38,19 @@
 						echo "<div class='columna columnaRecursos'><img class='imgRecursos' src='$imagen'></div>";
 						echo "<div class='columna columnaRecursos'>$nombre</div>";
 						if ($disponible == 'si') {
-							echo "<div class='columna columnaRecursos'><a href='index.php?idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							if (isset($_REQUEST['filtrarTipoRecurso'])) {
+								$filtro = $_REQUEST['filtrarTipoRecurso'];
+								echo "<div class='columna columnaRecursos'><a href='index.php?filtrarTipoRecurso=$filtro&idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							} elseif (isset($_REQUEST['disponibilidad'])) {
+								$filtro = $_REQUEST['disponibilidad'];
+								echo "<div class='columna columnaRecursos'><a href='index.php?disponibilidad=$filtro&idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							} elseif (isset($_REQUEST['buscar'])) {
+								$filtro = $_REQUEST['buscar'];
+								echo "<div class='columna columnaRecursos'><a href='index.php?buscar=$filtro&idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							} else {
+								echo "<div class='columna columnaRecursos'><a href='index.php?idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";
+							}
+							/*echo "<div class='columna columnaRecursos'><a href='index.php?idRecurso=$idRecurso#mostrarAñadirReserva'><input type='button' value='Reservar'></a></div>";*/
 						} else {
 							echo "<div class='columna columnaRecursos'><input class='desabilitado' type='button' value='Reservar'></div>";
 						}

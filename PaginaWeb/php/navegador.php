@@ -3,6 +3,7 @@
 		<li class="nivel1"><a href="index.php">Recursos</a></li>
 		<li class="nivel1"><a href="index.php?mostrar=reservas">Reservas</a></li>
 		<li class="nivel1"><a href="index.php?mostrar=incidencias">Incidencias</a></li>
+		<li class="nivel1"><a href="index.php?mostrar=formularioValidacion">Validacion</a></li>
 
 		<!-- <li class="usuario"><a href="index.php?mostrar=reservas&idUsu=si">Mis Reservas</a></li>
 		<li class="usuario"><a href="index.php?mostrar=incidencias&idUsu=si">Mis Incidencias</a></li> -->

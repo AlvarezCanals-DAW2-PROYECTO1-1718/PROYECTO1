@@ -44,4 +44,7 @@ window.onload = function() {
 	document.formValidar3.onsubmit = function() {
 	return validar(3);
 	}
+	document.formValidar4.onsubmit = function() {
+	return validar(4);
+	}
 }

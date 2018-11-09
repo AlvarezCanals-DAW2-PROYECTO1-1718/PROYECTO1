@@ -44,6 +44,9 @@
 							case 'incidencias':
 								include "php/incidencias.php";
 								break;
+							case 'formularioValidacion':
+								include "php/formularioValidacion.php";
+								break;
 							case 'cerrarSesion':
 								include "php/login.php";
 								break;

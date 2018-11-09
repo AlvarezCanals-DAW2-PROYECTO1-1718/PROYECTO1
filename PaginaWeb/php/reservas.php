@@ -13,12 +13,11 @@
 			$id_rec=$_REQUEST['idRecurso'];
 			$tiempo=$_REQUEST['tiempoEstimado_reserva'];
 			$descripcion=$_REQUEST['descripcionReserva'];
-			$query="INSERT INTO `tbl_reserva` ( `descripcion_reserva`,`fechaInicio_reserva`,  `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES ('$descripcion', '$fecha', '$tiempo', '$idUsuario', '$id_rec');";
-			$consulta = mysqli_query($link, $query);
-
-			$query="UPDATE `tbl_recurso` SET `disp_recurso` = 'no' WHERE `tbl_recurso`.`id_recurso` = '$id_rec';";
-			echo "$query";
-			$consulta = mysqli_query($link, $query);
+			$query1="INSERT INTO `tbl_reserva` ( `descripcion_reserva`,`fechaInicio_reserva`,  `tiempoEstimado_reserva`, `id_empleado`, `id_recurso`) VALUES ('$descripcion', '$fecha', '$tiempo', '$idUsuario', '$id_rec');";
+			$query2="UPDATE `tbl_recurso` SET `disp_recurso` = 'no' WHERE `tbl_recurso`.`id_recurso` = '$id_rec';";
+			echo "$query1";
+			$consulta1 = mysqli_query($link, $query1);
+			$consulta2 = mysqli_query($link, $query2);
 			header('Location: index.php?mostrar=reservas');
 		}
 
@@ -42,11 +41,11 @@
 		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
-			$query = "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` WHERE `tbl_empleado`.`id_empleado`='$us' ORDER BY `id_reserva`";
+			$query = "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` INNER JOIN `tbl_tiporecurso` ON `tbl_recurso`.`id_tipoRecurso` = `tbl_tiporecurso`.`id_tipoRecurso` WHERE `tbl_empleado`.`id_empleado`='$us' ORDER BY `fechaInicio_reserva` DESC";
 			$consulta=mysqli_query($link, $query);
 			$boton = true;
 		} else {
-			$query = "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` ORDER BY `id_reserva`";
+			$query = "SELECT * FROM tbl_reserva INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_reserva`.`id_empleado` = `tbl_empleado`.`id_empleado` INNER JOIN `tbl_tiporecurso` ON `tbl_recurso`.`id_tipoRecurso` = `tbl_tiporecurso`.`id_tipoRecurso` ORDER BY `fechaInicio_reserva` DESC";
 			
 			$consulta=mysqli_query($link, $query);
 			$boton = false;
@@ -55,6 +54,7 @@
 			if(mysqli_num_rows($consulta)>0) {
 				echo "<div class='fila encabezado'>";
 					echo "<div class='columna noRecursos'>Recurso</div>";
+					echo "<div class='columna noRecursos'>Tipo</div>";
 					echo "<div class='columna noRecursos'>Descripción</div>";
 					echo "<div class='columna noRecursos'>Fecha inicio</div>";
 					echo "<div class='columna noRecursos'>Fecha final</div>";
@@ -70,9 +70,11 @@
 					$modoFinalizacion = $array['modoFinalizacion_reserva'];
 					/*del inner-------------------------------------*/
 					$recurso = $array['nombre_recurso'];
+					$tipo = $array['nombre_tipoRecurso'];
 					$empleado = $array['usuario_empleado'];
 					echo "<div class='fila'>";
 						echo "<div class='columna noRecursos'>$recurso</div>";
+						echo "<div class='columna noRecursos'>$tipo</div>";
 						echo "<div class='columna noRecursos'>$descripcion</div>";
 						echo "<div class='columna noRecursos'>$fechaInicio</div>";
 						echo "<div class='columna noRecursos'>$fechaFin</div>";

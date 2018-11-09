@@ -14,12 +14,16 @@
 			$tituloIncidencia=$_REQUEST['tituloIncidencia'];
 			$descripcion=$_REQUEST['descripcionIncidencia'];
 			$idRecurso = $_REQUEST['idRecursoIncidencia'];
-			$query="SET @sub = (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`id_recurso` = $idRecurso) AND (`fechaFinal_reserva` IS NULL));";
-			$consulta = mysqli_query($link, $query);
-			$query="UPDATE `tbl_reserva` SET `fechaFinal_reserva` = '$fecha', `modoFinalizacion_reserva` = 'incidencia' WHERE `id_reserva` = @sub";
-			$consulta = mysqli_query($link, $query);
-			$query="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$tituloIncidencia', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = $idRecurso)))";
-			$consulta = mysqli_query($link, $query);
+			$query1="SET @sub = (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`id_recurso` = $idRecurso) AND (`fechaFinal_reserva` IS NULL));";
+			$query2="UPDATE `tbl_reserva` SET `fechaFinal_reserva` = '$fecha', `modoFinalizacion_reserva` = 'incidencia' WHERE `id_reserva` = @sub";			
+			$query3="INSERT INTO `tbl_incidencia` (`titulo_incidencia`, `descripcion_incidencia`, `fechaInicio_incidencia`, `id_reserva`) VALUES ('$tituloIncidencia', '$descripcion', '$fecha', (SELECT `id_reserva` FROM `tbl_reserva` WHERE (`modoFinalizacion_reserva` = 'incidencia') AND (`id_recurso` = $idRecurso) ORDER BY `fechaInicio_reserva` DESC LIMIT 1))";
+			echo "$query1<br><br>";
+			echo "$query2<br><br>";
+			echo "$query3<br><br>";
+			$consulta1 = mysqli_query($link, $query1);
+			$consulta2 = mysqli_query($link, $query2);
+			$consulta3 = mysqli_query($link, $query3);
+
 			header("Location: index.php?mostrar=incidencias&idUsu=$idUsuario");
 		}
 
@@ -40,10 +44,10 @@
 		// Mostrar --------------------------------------------------
 		if (isset($_REQUEST['idUsu'])) {
 			$us=$_REQUEST['idUsu'];
-			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` WHERE `tbl_reserva`.`id_empleado`='$us' ORDER BY `id_incidencia`");
+			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` WHERE `tbl_reserva`.`id_empleado`='$us' ORDER BY `fechaInicio_incidencia` DESC");
 			$boton = true;
 		}else{
-			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` ORDER BY `id_incidencia`");
+			$consulta=mysqli_query($link, "SELECT * FROM `tbl_incidencia` INNER JOIN `tbl_reserva` ON `tbl_reserva`.`id_reserva`=`tbl_incidencia`.`id_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso` = `tbl_recurso`.`id_recurso` INNER JOIN `tbl_empleado` ON `tbl_empleado`.`id_empleado`=`tbl_reserva`.`id_empleado` ORDER BY `fechaInicio_incidencia` DESC");
 			$boton = false;
 		}
 		

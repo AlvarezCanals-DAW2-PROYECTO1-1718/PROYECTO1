@@ -11,6 +11,9 @@
 			case 'incidencias':
 				echo "<h1 class='cabecera'>Incidencias</h1>";
 				break;
+			case 'formularioValidacion':
+				echo "<h1 class='cabecera'>Validacion</h1>";
+				break;
 			default:
 				echo "<h1 class='cabecera'>Recursos</h1>";
 				break;

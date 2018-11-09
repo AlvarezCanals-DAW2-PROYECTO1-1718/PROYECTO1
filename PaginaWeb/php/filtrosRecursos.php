@@ -26,13 +26,13 @@
 	}
 ?>
 <div class="contenedorFiltros">
-	<form class="filtro" method="GET" action="index.php">
+	<form class="filtro" name="formValidar4" method="GET" action="index.php">
 		<?php
 			if (isset($_REQUEST['buscar'])) {
 				$busqueda = $_REQUEST['buscar'];
-				?><input class="buscar" name="buscar" type="search" placeholder="Introduce tu busqueda..." value=<?php echo "$busqueda"; ?>><?php
+				?><input class="buscar formValidar4" name="buscar" type="search" placeholder="Introduce tu busqueda..." value=<?php echo "$busqueda"; ?>><?php
 			} else {
-				?><input class="buscar" name="buscar" type="search" placeholder="Introduce tu busqueda..."><?php
+				?><input class="buscar formValidar4" name="buscar" type="search" placeholder="Introduce tu busqueda..."><?php
 			}
 		?>
 		
