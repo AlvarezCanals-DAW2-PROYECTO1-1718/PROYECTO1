@@ -50,60 +50,63 @@
 			$consulta=mysqli_query($link, $query);
 			$boton = false;
 		}
-		echo "<div class='tabla'>";
-			if(mysqli_num_rows($consulta)>0) {
-				echo "<div class='fila encabezado'>";
-					echo "<div class='columna noRecursos'>Recurso</div>";
-					echo "<div class='columna noRecursos'>Tipo</div>";
-					echo "<div class='columna noRecursos'>Descripción</div>";
-					echo "<div class='columna noRecursos'>Fecha inicio</div>";
-					echo "<div class='columna noRecursos'>Fecha final</div>";
-					echo "<div class='columna noRecursos'>Tiempo aproximado</div>";
-					echo "<div class='columna noRecursos'>Empleado</div>";
-				echo "</div>";
-				while($array = mysqli_fetch_array($consulta)) {
-					$idReserva = $array['id_reserva'];
-					$descripcion = $array['descripcion_reserva'];
-					$fechaInicio = $array['fechaInicio_reserva'];
-					$fechaFin = $array['fechaFinal_reserva'];
-					$tiempoEstimado = $array['tiempoEstimado_reserva'];
-					$modoFinalizacion = $array['modoFinalizacion_reserva'];
-					/*del inner-------------------------------------*/
-					$recurso = $array['nombre_recurso'];
-					$tipo = $array['nombre_tipoRecurso'];
-					$empleado = $array['usuario_empleado'];
-					echo "<div class='fila'>";
-						echo "<div class='columna noRecursos'>$recurso</div>";
-						echo "<div class='columna noRecursos'>$tipo</div>";
-						echo "<div class='columna noRecursos'>$descripcion</div>";
-						echo "<div class='columna noRecursos'>$fechaInicio</div>";
-						echo "<div class='columna noRecursos'>$fechaFin</div>";
-						echo "<div class='columna noRecursos'>$tiempoEstimado</div>";
-						echo "<div class='columna noRecursos'>$empleado</div>";
-						
-						$queryBoton="SELECT * FROM `tbl_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso`=`tbl_recurso`.`id_recurso` WHERE `id_reserva` = '$idReserva'";
-						$consultaBoton = mysqli_query($link, $queryBoton);
-						if(mysqli_num_rows($consulta)>0) {
-							while($arrayBoton = mysqli_fetch_array($consultaBoton)) {
-								$idRecurso = $arrayBoton['id_recurso'];
-								if ($boton && $modoFinalizacion==NULL) {
-									echo "<div class='columna noRecursos'><a href='index.php?mostrar=reservas&idRecursoFinalizar=$idRecurso&idUsu=2&idReserva=$idReserva'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
-								}
+		echo "<div class='contenedorFiltros'>";
+			include "php/filtrosReservas.php";
+			echo "<div class='tabla'>";
+				if(mysqli_num_rows($consulta)>0) {
+					echo "<div class='fila encabezado'>";
+						echo "<div class='columna noRecursos'>Recurso</div>";
+						echo "<div class='columna noRecursos'>Tipo</div>";
+						echo "<div class='columna noRecursos'>Descripción</div>";
+						echo "<div class='columna noRecursos'>Fecha inicio</div>";
+						echo "<div class='columna noRecursos'>Fecha final</div>";
+						echo "<div class='columna noRecursos'>Tiempo aproximado</div>";
+						echo "<div class='columna noRecursos'>Empleado</div>";
+					echo "</div>";
+					while($array = mysqli_fetch_array($consulta)) {
+						$idReserva = $array['id_reserva'];
+						$descripcion = $array['descripcion_reserva'];
+						$fechaInicio = $array['fechaInicio_reserva'];
+						$fechaFin = $array['fechaFinal_reserva'];
+						$tiempoEstimado = $array['tiempoEstimado_reserva'];
+						$modoFinalizacion = $array['modoFinalizacion_reserva'];
+						/*del inner-------------------------------------*/
+						$recurso = $array['nombre_recurso'];
+						$tipo = $array['nombre_tipoRecurso'];
+						$empleado = $array['usuario_empleado'];
+						echo "<div class='fila'>";
+							echo "<div class='columna noRecursos'>$recurso</div>";
+							echo "<div class='columna noRecursos'>$tipo</div>";
+							echo "<div class='columna noRecursos'>$descripcion</div>";
+							echo "<div class='columna noRecursos'>$fechaInicio</div>";
+							echo "<div class='columna noRecursos'>$fechaFin</div>";
+							echo "<div class='columna noRecursos'>$tiempoEstimado</div>";
+							echo "<div class='columna noRecursos'>$empleado</div>";
+							
+							$queryBoton="SELECT * FROM `tbl_reserva` INNER JOIN `tbl_recurso` ON `tbl_reserva`.`id_recurso`=`tbl_recurso`.`id_recurso` WHERE `id_reserva` = '$idReserva'";
+							$consultaBoton = mysqli_query($link, $queryBoton);
+							if(mysqli_num_rows($consulta)>0) {
+								while($arrayBoton = mysqli_fetch_array($consultaBoton)) {
+									$idRecurso = $arrayBoton['id_recurso'];
+									if ($boton && $modoFinalizacion==NULL) {
+										echo "<div class='columna noRecursos'><a href='index.php?mostrar=reservas&idRecursoFinalizar=$idRecurso&idUsu=2&idReserva=$idReserva'><input class='añadir-lista' type='button' value='Finalizar'></a></div>";
+									}
 
-								if ($grupoUsuario == 'administradores') {
-									if ($fechaFin == NULL) {
-										echo "<div class='columna noRecursos'><a href='index.php?mostrar=reservas&idReservaCancelar=$idReserva&idRecurso=$idRecurso'><input class='añadir-lista' type='button' value='Cancelar'></a></div>";
-									}							
+									if ($grupoUsuario == 'administradores') {
+										if ($fechaFin == NULL) {
+											echo "<div class='columna noRecursos'><a href='index.php?mostrar=reservas&idReservaCancelar=$idReserva&idRecurso=$idRecurso'><input class='añadir-lista' type='button' value='Cancelar'></a></div>";
+										}							
+									}
 								}
 							}
-						}
-						
-						
-					echo "</div>";
+							
+							
+						echo "</div>";
+					}
+				} else {
+					echo "Aun no hay reservas";
 				}
-			} else {
-				echo "Aun no hay reservas";
-			}
+			echo "</div>";
 		echo "</div>";
 	?>
 </article>

@@ -5,7 +5,7 @@
 			echo "<a href='#mostrarAñadirRecurso'><input type='button' value='Añadir Recurso'></a>";
 		}
 		
-		// Mostrar --------------------------------------------------
+		// Insertar --------------------------------------------------
 		if (isset($_REQUEST['nombreRecurso'])) {
 			$nombreRec = $_REQUEST['nombreRecurso'];
 			$descRec = $_REQUEST['descripcionRecurso'];
@@ -22,6 +22,7 @@
 			header('Location: index.php');
 		}
 
+		// Mostrar --------------------------------------------------
 		$consulta=mysqli_query($link, "SELECT * FROM tbl_recurso ORDER BY id_recurso");
 		echo "<div class='tabla tablaRecursos'>";
 			include "php/filtrosRecursos.php";

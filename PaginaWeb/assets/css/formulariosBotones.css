@@ -50,10 +50,10 @@ input[type="search"].buscar {
     height: 25px;
     padding: 5px;
     float: none;
-    display: inherit;
+    /*display: inherit;*/
 }
 input[type="submit"].buscar {
-    float: left;
+    /*float: left;*/
     margin: 3px;
     /* text-align: left; */
 }
